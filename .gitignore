@@ -1,0 +1,5 @@
+node_modules
+.next
+.env*
+content/site.json
+content/uploads

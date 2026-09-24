@@ -1,0 +1,47 @@
+.adm { --bg:#f4f4f5; --card:#fff; --line:#e4e4e7; --txt:#18181b; --mut:#71717a; --acc:#f6c711; background:var(--bg); color:var(--txt); min-height:100vh; font-size:15px; }
+.adm--login { display:grid; place-items:center; padding:20px; }
+.adm-card { background:var(--card); padding:28px; border-radius:10px; width:min(360px,100%); display:grid; gap:14px; border:1px solid var(--line); }
+.adm h1 { font-size:20px; margin:0; }
+.adm-top { position:sticky; top:0; z-index:5; background:#111; color:#fff; display:flex; align-items:center; gap:14px; padding:10px 16px; flex-wrap:wrap; }
+.adm-top__actions { margin-left:auto; display:flex; gap:10px; align-items:center; }
+.adm-status { font-size:13px; color:#a1a1aa; }
+.adm-status.is-dirty { color:var(--acc); }
+.adm-btn { background:var(--acc); color:#000; border:0; border-radius:6px; padding:10px 16px; font-weight:700; cursor:pointer; text-decoration:none; font-size:14px; display:inline-block; }
+.adm-btn:disabled { opacity:.45; cursor:default; }
+.adm-btn--ghost { background:transparent; color:inherit; border:1px solid currentColor; }
+.adm-link { background:none; border:0; color:inherit; text-decoration:underline; cursor:pointer; font-size:14px; padding:4px; }
+.adm-link.danger, .danger { color:#dc2626; }
+.adm-msg { margin:12px auto 0; max-width:860px; padding:10px 14px; border-radius:6px; }
+.adm-msg.ok { background:#dcfce7; } .adm-msg.erro, .adm-erro { background:#fee2e2; color:#991b1b; padding:8px 12px; border-radius:6px; margin:0; }
+.adm-body { max-width:860px; margin:0 auto; padding:16px 16px 60px; display:grid; gap:12px; }
+.adm-body details { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:0 18px; }
+.adm-body details[open] { padding-bottom:18px; }
+.adm-body summary { cursor:pointer; font-weight:700; padding:16px 0; }
+.adm-field { display:grid; gap:6px; margin-top:14px; font-weight:600; font-size:14px; }
+.adm input:not([type=file]), .adm textarea { font:inherit; font-weight:400; padding:10px 12px; border:1px solid #d4d4d8; border-radius:6px; width:100%; background:#fff; color:var(--txt); }
+.adm textarea { resize:vertical; line-height:1.5; }
+.adm-hint { color:var(--mut); font-weight:400; font-size:12.5px; }
+.adm-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.adm-img { display:flex; gap:12px; align-items:center; }
+.adm-img img { width:120px; height:90px; object-fit:cover; border-radius:6px; background:#000; }
+.adm-img .adm-btn--ghost { color:var(--txt); }
+.adm-gallery { list-style:none; margin:4px 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fill,minmax(110px,1fr)); gap:10px; }
+.adm-gallery li { border:1px solid var(--line); border-radius:8px; overflow:hidden; background:#000; }
+.adm-gallery img { width:100%; aspect-ratio:9/12; object-fit:cover; display:block; }
+.adm-gallery__tools { display:flex; background:#fff; }
+.adm-gallery__tools button { flex:1; border:0; background:none; padding:6px 0; cursor:pointer; font-size:14px; }
+.adm-gallery__tools button:disabled { opacity:.3; }
+.adm-gallery__add { display:grid; place-items:center; background:#fafafa !important; border-style:dashed !important; min-height:150px; }
+.adm-gallery__add label { cursor:pointer; font-weight:700; padding:20px; color:#000; }
+.adm-faq { border-top:1px solid var(--line); margin-top:14px; padding-top:4px; }
+.adm-warn { background:#fef9c3; padding:8px 12px; border-radius:6px; font-size:13.5px; margin:0; }
+.adm-foot { color:var(--mut); font-size:12.5px; text-align:center; }
+@media (max-width:640px) { .adm-row { grid-template-columns:1fr; } .adm-top__actions { width:100%; margin-left:0; } }
+.adm-listrow { display:flex; gap:6px; }
+.adm-listrow button { border:1px solid #d4d4d8; background:#fff; border-radius:6px; width:40px; cursor:pointer; }
+.adm-listrow button:disabled { opacity:.3; }
+.adm-btn--sm { padding:6px 12px; font-size:13px; justify-self:start; color:var(--txt); }
+.adm-pages { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+.adm-pages button { border: 1px solid #ccc; background: #fff; border-radius: 999px; padding: 8px 14px; font-weight: 600; cursor: pointer; font-size: 14px; }
+.adm-pages button.is-on { background: #111; color: #fff; border-color: #111; }
+.adm-hint--box { display: block; background: #fff8d6; border: 1px solid #f0dc7a; padding: 10px 12px; border-radius: 8px; margin: 0 0 14px; }

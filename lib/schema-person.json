@@ -1,0 +1,208 @@
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": [
+    "Person",
+    "Nutritionist"
+   ],
+   "@id": "https://fabriciomoura.com/#fabricio-moura",
+   "name": "Fabricio Moura",
+   "givenName": "Fabricio",
+   "familyName": "Moura",
+   "url": "https://fabriciomoura.com/sobre/",
+   "mainEntityOfPage": {
+    "@id": "https://fabriciomoura.com/sobre/#webpage"
+   },
+   "jobTitle": "Nutricionista Esportivo",
+   "description": "Nutricionista esportivo e educador fisico com atendimento 100% online. Monta estrategias individuais de nutricao e treino para perda de gordura com preservacao de massa muscular, incluindo acompanhamento de pacientes em uso de analogos de GLP-1 como o Mounjaro (tirzepatida).",
+   "image": {
+    "@type": "ImageObject",
+    "@id": "https://fabriciomoura.com/#fabricio-foto",
+    "url": "https://fabriciomoura.com/wp-content/uploads/2026/06/Screenshot_20260322_192920_Canva1-scaled.jpg",
+    "width": 1200,
+    "height": 1200,
+    "caption": "Fabricio Moura, nutricionista esportivo — CRN3 95563/P"
+   },
+   "gender": "Male",
+   "nationality": {
+    "@type": "Country",
+    "name": "Brasil"
+   },
+   "knowsLanguage": [
+    "pt-BR"
+   ],
+   "worksFor": {
+    "@id": "https://fabriciomoura.com/#organization"
+   },
+   "hasOccupation": [
+    {
+     "@type": "Occupation",
+     "name": "Nutricionista",
+     "occupationalCategory": "2265 - Nutricionista (CBO)",
+     "occupationLocation": {
+      "@type": "Country",
+      "name": "Brasil"
+     }
+    },
+    {
+     "@type": "Occupation",
+     "name": "Educador Fisico",
+     "occupationalCategory": "2241 - Profissional de Educacao Fisica (CBO)",
+     "occupationLocation": {
+      "@type": "Country",
+      "name": "Brasil"
+     }
+    }
+   ],
+   "hasCredential": [
+    {
+     "@type": "EducationalOccupationalCredential",
+     "@id": "https://fabriciomoura.com/#crn",
+     "name": "Nutricionista registrado — CRN3 95563/P",
+     "credentialCategory": "Registro Profissional",
+     "identifier": "CRN3 95563/P",
+     "recognizedBy": {
+      "@type": "GovernmentOrganization",
+      "name": "Conselho Regional de Nutricionistas da 3a Regiao (CRN-3)",
+      "url": "https://www.crn3.org.br/"
+     }
+    },
+    {
+     "@type": "EducationalOccupationalCredential",
+     "@id": "https://fabriciomoura.com/#cref",
+     "name": "Educador Fisico registrado — CREF 201974-G/SP",
+     "credentialCategory": "Registro Profissional",
+     "identifier": "CREF 201974-G/SP",
+     "recognizedBy": {
+      "@type": "GovernmentOrganization",
+      "name": "Conselho Regional de Educacao Fisica da 4a Regiao (CREF4/SP)",
+      "url": "https://www.crefsp.gov.br/"
+     }
+    },
+    {
+     "@type": "EducationalOccupationalCredential",
+     "name": "Bacharelado em Educacao Fisica — UNIP",
+     "credentialCategory": "degree",
+     "educationalLevel": "Bachelor",
+     "recognizedBy": {
+      "@type": "CollegeOrUniversity",
+      "name": "Universidade Paulista (UNIP)",
+      "url": "https://www.unip.br/"
+     }
+    },
+    {
+     "@type": "EducationalOccupationalCredential",
+     "name": "Pos-graduacao em Nutricao Esportiva — UNIP",
+     "credentialCategory": "postgraduate",
+     "educationalLevel": "Postgraduate",
+     "recognizedBy": {
+      "@type": "CollegeOrUniversity",
+      "name": "Universidade Paulista (UNIP)",
+      "url": "https://www.unip.br/"
+     }
+    }
+   ],
+   "alumniOf": {
+    "@type": "CollegeOrUniversity",
+    "name": "Universidade Paulista (UNIP)",
+    "url": "https://www.unip.br/"
+   },
+   "knowsAbout": [
+    "Nutricao esportiva",
+    "Emagrecimento e perda de gordura corporal",
+    "Deficit calorico",
+    "Hipertrofia muscular",
+    "Recomposicao corporal",
+    "Suplementacao com creatina",
+    "Nutricao no uso de Mounjaro (tirzepatida) e analogos de GLP-1",
+    "Gordura visceral",
+    "Testosterona e alimentacao",
+    "Fibras alimentares e saciedade",
+    "Prescricao de treino associada a nutricao",
+    "Protocolos hormonais e nutricao (TRT, GLP-1)"
+   ],
+   "sameAs": [
+    "https://www.instagram.com/fabriciomourateam/",
+    "https://www.threads.net/@fabriciomourateam",
+    "https://www.linkedin.com/in/fabricio-moura-team/",
+    "https://www.youtube.com/@fabriciomourateam",
+    "https://www.wikidata.org/wiki/Q140785075"
+   ],
+   "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "Agendamento e atendimento",
+    "telephone": "+55-11-91484-9797",
+    "url": "https://wa.me/5511914849797",
+    "availableLanguage": [
+     "Portuguese"
+    ],
+    "areaServed": "BR"
+   }
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://fabriciomoura.com/#organization",
+   "name": "Fabricio Moura | Nutricao e Treinamento",
+   "alternateName": "Fabricio Moura Nutricao e Treinamento",
+   "legalName": "Fabricio Moura Nutricao e Treinamento",
+   "taxID": "53.348.650/0001-99",
+   "url": "https://fabriciomoura.com/",
+   "description": "Consultoria online de nutricao esportiva e treinamento conduzida pelo nutricionista Fabricio Moura (CRN3 95563/P).",
+   "logo": {
+    "@type": "ImageObject",
+    "@id": "https://fabriciomoura.com/#logo",
+    "url": "https://fabriciomoura.com/wp-content/uploads/2024/03/Copia-de-FABRICIO_20231215_225528_0000.png",
+    "contentUrl": "https://fabriciomoura.com/wp-content/uploads/2024/03/Copia-de-FABRICIO_20231215_225528_0000.png",
+    "width": 1080,
+    "height": 762,
+    "caption": "Fabricio Moura | Nutricao e Treinamento"
+   },
+   "image": {
+    "@id": "https://fabriciomoura.com/#logo"
+   },
+   "founder": {
+    "@id": "https://fabriciomoura.com/#fabricio-moura"
+   },
+   "employee": {
+    "@id": "https://fabriciomoura.com/#fabricio-moura"
+   },
+   "areaServed": [
+    {
+     "@type": "Country",
+     "name": "Brasil"
+    },
+    {
+     "@type": "Place",
+     "name": "Atendimento online — Brasil e exterior"
+    }
+   ],
+   "knowsAbout": [
+    "Nutricao esportiva",
+    "Emagrecimento",
+    "Hipertrofia",
+    "Acompanhamento nutricional online",
+    "Nutricao durante uso de Mounjaro"
+   ],
+   "contactPoint": [
+    {
+     "@type": "ContactPoint",
+     "contactType": "customer support",
+     "telephone": "+55-11-91484-9797",
+     "url": "https://wa.me/5511914849797",
+     "availableLanguage": [
+      "Portuguese"
+     ],
+     "areaServed": "BR"
+    }
+   ],
+   "sameAs": [
+    "https://www.instagram.com/fabriciomourateam/",
+    "https://www.linkedin.com/in/fabricio-moura-team/",
+    "https://www.youtube.com/@fabriciomourateam",
+    "https://www.tiktok.com/@fabriciomourateam",
+    "https://www.wikidata.org/wiki/Q140785075"
+   ]
+  }
+ ]
+}
