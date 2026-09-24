@@ -108,7 +108,7 @@ p { margin: 0 0 1em; }
 /* ---------- Barra fixa ---------- */
 .sticky-bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 50; background: rgba(12,12,12,.96); border-top: 2px solid var(--yellow); transform: translateY(110%); transition: transform .3s ease; padding-bottom: env(safe-area-inset-bottom); }
 .sticky-bar.is-visible { transform: none; }
-.sticky-bar__inner { max-width: 1200px; margin: 0 auto; padding: 10px 20px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.sticky-bar__inner { max-width: 1200px; margin: 0 auto; padding: 10px 20px; display: flex; align-items: center; justify-content: center; gap: 16px; }
 .sticky-bar__text { margin: 0; font-weight: 700; font-size: 14px; }
 .sticky-bar__actions { display: flex; gap: 10px; }
 .sticky-bar .btn { min-height: 46px; padding: 10px 18px; font-size: 13px; }
