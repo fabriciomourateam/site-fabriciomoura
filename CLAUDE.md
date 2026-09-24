@@ -21,15 +21,26 @@ Preferência de escrita: sem travessão (em-dash) em nenhum texto.
 - Canonical de cada página = mesma URL que já está indexada (com barra no final). Dados estruturados: Person/Nutritionist (lib/schema-person.json, copiado do WP) + FAQPage gerado do FAQ.
 - `skipTrailingSlashRedirect: true` porque o WordPress usa barra final.
 
-## Rastreamento (decidido com o dono)
-- Mantém: **GTM-NVTZQGZ2** (contém a conversão "Botão WhatsApp" AW-16613160058 rótulo CeqfCLy49roZEPro4vE9, vinculador e remarketing). Testado: dispara igual no site novo.
-- Removidos: GA4 (GT-PJRQZN9M) e Pixel da Meta (1780102476723382). Não rodam Meta Ads para o site e não usam o GA4. Campos vazios no painel = desligado (o código não chama fbq nem /api/meta).
-- Pendente fora do código: pausar as tags da Meta dentro do GTM e desativar o plugin PixelYourSite e o módulo Analytics do Site Kit no WordPress.
-- Código na mensagem do WhatsApp: `{cod}` vem da edge function `ad-click-log` do Supabase "Controle de pacientes" (grava gclid, palavra-chave, campanha em ad_clicks). Mesma lógica do WordPress.
+## Rastreamento (revisado 24/09/2026 com o dono, no Claude Code)
+- **NÃO há GTM.** O dono não tem contêiner Tag Manager (a conta Tag Manager está vazia). O
+  `GTM-NVTZQGZ2` que constava antes era fantasma: não rastreava nada e só gerava TBT.
+  Removido (`rastreio.gtm = ""`).
+- **A conversão ao Google Ads é OFFLINE, pelo CRM.** "Reunião agendada" (R$800) e "Venda"
+  (valor real) sobem por gclid via as edge functions `google-ads-conversions` /
+  `google-ads-sales` do Supabase "Controle de pacientes" — independe do site. A Tag do Google
+  ligada ao Ads é `GT-5TGZL4Q5` (Google Ads `AW-16613160058`); NÃO é carregada pelo site.
+- **Nenhuma tag de terceiro no site:** GA4, Pixel da Meta e GTM todos vazios/removidos. O site
+  não carrega nenhum script de tracking externo (só um `preconnect` do Google, inócuo).
+- **O que o site faz de rastreamento:** captura gclid/gbraid/wbraid (URL ou localStorage 90d) e
+  injeta o `{cod}` na mensagem do WhatsApp, chamando a edge function `ad-click-log` (grava gclid,
+  palavra-chave/UTM, campanha em `ad_clicks`). Mesmo snippet que rodava no footer do WordPress —
+  ver `Tracking.jsx`. É isso que casa o lead ao gclid pra a conversão offline lá na frente.
+- **Já feito no WordPress (24/09):** Site Kit → Analytics desconectado; plugin PixelYourSite desativado.
 
 ## Números de referência (medidos em 24/09/2026)
 - Lighthouse celular das páginas atuais no WP: nota 49 e 53, CLS 0,80, 1,1 MB.
-- Site novo: CLS 0, 840 KB. O TBT alto que sobra vem do GTM carregando o Pixel da Meta (sai quando pausarem a tag no GTM).
+- Site novo: CLS 0, 840 KB. O TBT que aparecia no desktop (470ms) era o carregador do GTM fantasma;
+  com `rastreio.gtm = ""` o site deixa de carregar qualquer script externo, então esse TBT sai. Re-medir após o deploy.
 
 ## Publicação (ainda não feita)
 Este site vive no seu **próprio repositório** `fabriciomourateam/site-fabriciomoura` (decisão de 24/09/2026;
