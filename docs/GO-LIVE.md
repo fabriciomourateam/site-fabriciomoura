@@ -55,17 +55,23 @@ via proxy (rewrites do `next.config.mjs`). E-mail continua no Hostinger, intacto
 Na Vercel, adicionados `fabriciomoura.com` e `www.fabriciomoura.com` ao projeto.
 No Hostinger (Zona DNS), editados SO estes dois registros:
 
-| Registro | Antes | Depois |
+Valores finais aplicados (os que a Vercel recomenda no "View DNS configuration"):
+
+| Registro | Antes | Depois (em producao) |
 |---|---|---|
-| `@` (apex) | ALIAS -> `fabriciomoura.com.cdn.hstgr.net` | ALIAS/CNAME -> `cname.vercel-dns.com` (ou A -> `76.76.21.21`) |
-| `www` | CNAME -> `www.fabriciomoura.com.cdn.hstgr.net` | CNAME -> `cname.vercel-dns.com` |
+| `@` (apex) | ALIAS -> `fabriciomoura.com.cdn.hstgr.net` | A -> `216.198.79.1` |
+| `www` | CNAME -> `www.fabriciomoura.com.cdn.hstgr.net` | CNAME -> `0d72035e3a3ff3b9.vercel-dns-017.com` |
 
 O `www` redireciona pro apex (`fabriciomoura.com`) - comportamento desejado, dominio
 canonico unico.
 
-> Aviso "DNS Change Recommended" (amarelo) na Vercel: o site funciona e o SSL fica ativo.
-> Pra ficar 100% verde, ver o "View DNS configuration" do apex na Vercel e usar o
-> registro que ela recomenda (normalmente A -> `76.76.21.21` no `@`).
+> O `www` CNAME (`0d72035e3a3ff3b9.vercel-dns-017.com`) e especifico deste projeto Vercel.
+> O IP do apex (`216.198.79.1`) e o que a Vercel recomenda hoje; se um dia der aviso amarelo
+> "DNS Change Recommended", conferir o "View DNS configuration" do apex na Vercel e usar o
+> valor que ela mostrar. Os dois ficaram "Valid Configuration" (verde) apos aplicar.
+
+O `novo.fabriciomoura.com` (dominio de teste da Fase 2) foi removido do Hostinger e da
+Vercel apos a virada.
 
 ## NAO TOCAR (mexer aqui quebra e-mail ou o blog)
 
@@ -93,7 +99,7 @@ A virada e reversivel pelo DNS. No Hostinger, volta os dois registros pro estado
 
 | Registro | Voltar para |
 |---|---|
-| `@` (apex) | ALIAS -> `fabriciomoura.com.cdn.hstgr.net` |
+| `@` (apex) | A/ALIAS -> `fabriciomoura.com.cdn.hstgr.net` |
 | `www` | CNAME -> `www.fabriciomoura.com.cdn.hstgr.net` |
 
 Propaga em minutos e o WordPress volta a responder no dominio principal como antes.
