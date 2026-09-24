@@ -32,6 +32,9 @@ Preferência de escrita: sem travessão (em-dash) em nenhum texto.
 - Site novo: CLS 0, 840 KB. O TBT alto que sobra vem do GTM carregando o Pixel da Meta (sai quando pausarem a tag no GTM).
 
 ## Publicação (ainda não feita)
-Este site mora na pasta `site-fabriciomoura/` do repositório controle-de-pacientes (o painel continua na raiz).
-Na Vercel ele é um projeto separado com **Root Directory = site-fabriciomoura**.
-Passo a passo completo, testes e plano de volta: `docs/fabriciomoura/MANUAL-PUBLICAR-SITE.md`.
+Este site vive no seu **próprio repositório** `fabriciomourateam/site-fabriciomoura` (decisão de 24/09/2026;
+antes o plano era subpasta do controle-de-pacientes, mudou para repo separado para Next e Vite não se
+atrapalharem). Na Vercel é um projeto próprio com **Root Directory = `.`** (raiz do repo).
+O painel Vite (`painel-fmteam`) segue no repo `controle-de-pacientes`, sem relação de build com este.
+Passo a passo completo, testes e plano de volta: `docs/fabriciomoura/MANUAL-PUBLICAR-SITE.md` (no zip original;
+os passos de publicação continuam valendo, só troca "importe a pasta" por "importe este repo").
