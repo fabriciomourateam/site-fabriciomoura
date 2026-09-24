@@ -71,8 +71,12 @@ function srcTag(qs) {
 
 function buildText(base, code, tag) {
   const has = base.includes("{cod}");
+  // Código do anúncio (pago) entra entre crases -> vira "inline code" (monoespaçado) no WhatsApp.
+  // A tag de origem ([direto]/[organico], tráfego não-pago) entra SEM crase.
+  // O CRM extrai o código por regex com \b (fronteira de palavra), então a crase não atrapalha.
+  const codeFmt = code ? "`" + code + "`" : "";
   let t = base;
-  if (code) t = has ? t.replace("{cod}", code) : t.includes(code) ? t : t.trimEnd() + " " + code;
+  if (code) t = has ? t.replace("{cod}", codeFmt) : t.includes(code) ? t : t.trimEnd() + " " + codeFmt;
   else if (has) t = t.replace("{cod}", tag);
   else if (tag && !t.includes(tag)) t = t.trimEnd() + " " + tag;
   return t.replace(/\s{2,}/g, " ").trim();
