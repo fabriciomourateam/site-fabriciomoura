@@ -122,7 +122,8 @@ export default function Tracking({ ids, numero, msgPadrao, mode }) {
       if (saved?.ts && Date.now() - saved.ts < TTL) adIds = saved.ids;
     }
     const tag = srcTag(qs);
-    const land = "home";
+    const path = (location.pathname || "").toLowerCase();
+    const land = path.includes("esportivo") ? "esportivo" : path.includes("online") ? "online" : "home";
     let code = null;
     const decorate = () => {
       document.querySelectorAll(SELECTOR).forEach((a) => {
