@@ -20,6 +20,14 @@ const nextConfig = {
     minimumCacheTTL: 60 * 60 * 24 * 365, // imagens otimizadas ficam 1 ano em cache
     remotePatterns: supabaseHost ? [{ protocol: "https", hostname: supabaseHost, pathname: "/storage/v1/object/public/**" }] : [],
   },
+  // Atalho da bio do Instagram: fabriciomoura.com/bio -> página de links (membros).
+  // Temporário (307) de propósito, pra o navegador não cachear o destino (facilita trocar por uma /bio nativa depois).
+  async redirects() {
+    return [
+      { source: "/bio", destination: "https://membros.fabriciomoura.com/links.html", permanent: false },
+      { source: "/bio/", destination: "https://membros.fabriciomoura.com/links.html", permanent: false },
+    ];
+  },
   // Visitas de anúncio (em "/" e nas páginas de campanha) recebem a versão sem menu, sem mudar a URL.
   // Resolvido na CDN, sem custo de velocidade. Para Meta Ads, use ?utm_medium=paid ou aponte para /consultoria.
   async rewrites() {
