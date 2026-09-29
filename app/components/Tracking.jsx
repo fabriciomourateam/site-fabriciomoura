@@ -16,6 +16,9 @@ const API = "https://qhzifnyjyxdushxorzrk.supabase.co/functions/v1/ad-click-log"
 const APIKEY = "sb_publishable_qph0mJ7a0tVoMhXs6yF6ZQ_k8HgA2FR";
 const TTL = 90 * 24 * 60 * 60 * 1000;
 const SELECTOR = 'a[href*="wa.me"], a[href*="api.whatsapp"], a[href*="whatsapp.com/send"]';
+// GTM de produção. Usado mesmo se o campo do /admin estiver vazio: sem ele o Google Ads perde a
+// conversão "Botão WhatsApp" (foi o que derrubou os leads em 24/09/2026). Trocar só se mudar de contêiner.
+const GTM_PADRAO = "GTM-NVTZQGZ2";
 
 const getStore = (k) => { try { return JSON.parse(localStorage.getItem(k) || "null"); } catch { return null; } };
 const setStore = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} };
@@ -29,8 +32,9 @@ function addScript(src, onDone) {
   document.head.appendChild(s);
 }
 
-function loadTags({ gtm, googleTag, metaPixel }, pvId) {
+function loadTags({ gtm: gtmId, googleTag, metaPixel }, pvId) {
   if (window.__fmTags) return;
+  const gtm = (gtmId || "").trim() || GTM_PADRAO;
   window.__fmTags = true;
   window.dataLayer = window.dataLayer || [];
   window.gtag = function () { window.dataLayer.push(arguments); };

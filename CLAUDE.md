@@ -21,16 +21,23 @@ Preferência de escrita: sem travessão (em-dash) em nenhum texto.
 - Canonical de cada página = mesma URL que já está indexada (com barra no final). Dados estruturados: Person/Nutritionist (lib/schema-person.json, copiado do WP) + FAQPage gerado do FAQ.
 - `skipTrailingSlashRedirect: true` porque o WordPress usa barra final.
 
-## Rastreamento (revisado 24/09/2026 com o dono, no Claude Code)
-- **NÃO há GTM.** O dono não tem contêiner Tag Manager (a conta Tag Manager está vazia). O
-  `GTM-NVTZQGZ2` que constava antes era fantasma: não rastreava nada e só gerava TBT.
-  Removido (`rastreio.gtm = ""`).
-- **A conversão ao Google Ads é OFFLINE, pelo CRM.** "Reunião agendada" (R$800) e "Venda"
-  (valor real) sobem por gclid via as edge functions `google-ads-conversions` /
-  `google-ads-sales` do Supabase "Controle de pacientes" — independe do site. A Tag do Google
-  ligada ao Ads é `GT-5TGZL4Q5` (Google Ads `AW-16613160058`); NÃO é carregada pelo site.
-- **Nenhuma tag de terceiro no site:** GA4, Pixel da Meta e GTM todos vazios/removidos. O site
-  não carrega nenhum script de tracking externo (só um `preconnect` do Google, inócuo).
+## Rastreamento (corrigido 29/09/2026 — LEIA antes de mexer em tag)
+- **O GTM `GTM-NVTZQGZ2` é OBRIGATÓRIO e NÃO é fantasma.** Ele é gerenciado pela agência (as
+  contas Google do dono não têm acesso ao Tag Manager — por isso "parecia vazio"). O contêiner
+  publicado contém a conversão **"Botão WhatsApp"** do Google Ads (`AW-16613160058`, rótulo
+  `CeqfCLy49roZEPro4vE9`, gatilho de clique em link `wa.me`) — é a ação que as campanhas
+  otimizam — e o **Pixel da Meta** `1780102476723382`.
+- **Incidente 24→29/09/2026:** uma sessão anterior removeu o GTM achando que era fantasma. Com a
+  virada do DNS (24/09 ~16:45 BRT) o site passou a não carregar tag nenhuma → "Botão WhatsApp"
+  foi de ~50/dia a 0 em 25/09, o Smart Bidding estrangulou e os leads do Google caíram. Restaurado
+  em 29/09 com fallback no código (`GTM_PADRAO` em `Tracking.jsx`): mesmo com o campo do /admin
+  vazio, o GTM carrega. **Nunca remova o GTM por causa de TBT/PageSpeed.**
+- **Não preencha o campo "Pixel da Meta" do /admin** enquanto o pixel estiver dentro do GTM
+  (contaria PageView em dobro).
+- **Conversões OFFLINE pelo CRM são ADICIONAIS, não substituem o GTM.** "Reunião agendada" (R$800)
+  e "Venda" (valor real) sobem por gclid via as edge functions `google-ads-conversions` /
+  `google-ads-sales` do Supabase "Controle de pacientes". A Tag do Google ligada ao Ads é
+  `GT-5TGZL4Q5` (Google Ads `AW-16613160058`).
 - **O que o site faz de rastreamento:** captura gclid/gbraid/wbraid (URL ou localStorage 90d) e
   injeta o `{cod}` na mensagem do WhatsApp, chamando a edge function `ad-click-log` (grava gclid,
   palavra-chave/UTM, campanha em `ad_clicks`). Mesmo snippet que rodava no footer do WordPress —
@@ -39,8 +46,8 @@ Preferência de escrita: sem travessão (em-dash) em nenhum texto.
 
 ## Números de referência (medidos em 24/09/2026)
 - Lighthouse celular das páginas atuais no WP: nota 49 e 53, CLS 0,80, 1,1 MB.
-- Site novo: CLS 0, 840 KB. O TBT que aparecia no desktop (470ms) era o carregador do GTM fantasma;
-  com `rastreio.gtm = ""` o site deixa de carregar qualquer script externo, então esse TBT sai. Re-medir após o deploy.
+- Site novo: CLS 0, 840 KB. O GTM custa ~470ms de TBT no desktop, mas carrega depois da página
+  (modo "smart") e é indispensável para as conversões — o custo é aceito.
 
 ## Publicação (ainda não feita)
 Este site vive no seu **próprio repositório** `fabriciomourateam/site-fabriciomoura` (decisão de 24/09/2026;
