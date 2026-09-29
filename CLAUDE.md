@@ -31,9 +31,16 @@ Preferência de escrita: sem travessão (em-dash) em nenhum texto.
   virada do DNS (24/09 ~16:45 BRT) o site passou a não carregar tag nenhuma → "Botão WhatsApp"
   foi de ~50/dia a 0 em 25/09, o Smart Bidding estrangulou e os leads do Google caíram. Restaurado
   em 29/09 com fallback no código (`GTM_PADRAO` em `Tracking.jsx`): mesmo com o campo do /admin
-  vazio, o GTM carrega. **Nunca remova o GTM por causa de TBT/PageSpeed.**
-- **Não preencha o campo "Pixel da Meta" do /admin** enquanto o pixel estiver dentro do GTM
-  (contaria PageView em dobro).
+  vazio, o GTM carrega. **Nunca tire o GTM sem que as tags diretas (abaixo) estejam no lugar.**
+- **Modo de tags diretas (padrão a partir do PR "tags diretas"):** `Tracking.jsx` carrega o gtag do
+  Google Ads (`AW-16613160058`, conversão `CeqfCLy49roZEPro4vE9` no clique do WhatsApp) e o Pixel
+  (`1780102476723382`, PageView + Lead) DIRETO, sem o GTM. Os eventos entram numa fila na hora e os
+  scripts baixam na 1ª interação ou 4 s após o load. Plano de volta: `NEXT_PUBLIC_TRACKING_VIA=gtm`
+  na Vercel + redeploy (volta a carregar só o GTM). **Nunca os dois juntos** (conversão em dobro).
+  Com o modo direto, o GTM da agência deixa de ser carregado nas páginas do Next (o WordPress/blog
+  continua com o GTM dele).
+- **Modo GTM (plano de volta):** nele NÃO preencha o campo "Pixel da Meta" do /admin (o pixel já
+  roda dentro do GTM, contaria PageView em dobro). No modo direto o campo só troca o ID do pixel.
 - **Conversões OFFLINE pelo CRM são ADICIONAIS, não substituem o GTM.** "Reunião agendada" (R$800)
   e "Venda" (valor real) sobem por gclid via as edge functions `google-ads-conversions` /
   `google-ads-sales` do Supabase "Controle de pacientes". A Tag do Google ligada ao Ads é

@@ -3,12 +3,13 @@ import { useEffect } from "react";
 
 /*
   Rastreamento completo do site:
-  1. Google Tag Manager (Google Ads: vinculador de conversões + conversão "Botão WhatsApp")
+  1. Google Ads direto (gtag AW-16613160058: vinculador de conversões + conversão "Botão WhatsApp")
+     e Pixel da Meta direto. Modo antigo via GTM continua disponível (NEXT_PUBLIC_TRACKING_VIA=gtm).
   2. Tag do Google / GA4: opcional (campo vazio = desligado)
-  3. Pixel da Meta: opcional (campo vazio = desligado, e a API de Conversões também não é chamada)
+  3. API de Conversões da Meta: só envia se META_CAPI_TOKEN estiver na Vercel
   4. Código de rastreio na mensagem do WhatsApp (mesma lógica que roda hoje no WordPress, via Supabase)
 
-  Modo "smart": as tags de terceiros carregam logo depois que a página ficou pronta na tela
+  Modo "smart": os eventos entram numa fila na hora; os scripts de terceiros baixam 4 s depois do load
   (ou no primeiro toque/rolagem, o que vier antes). A página aparece primeiro, o rastreio vem logo em seguida.
   Modo "eager": carrega tudo imediatamente após a página ficar interativa.
 */
@@ -20,6 +21,19 @@ const SELECTOR = 'a[href*="wa.me"], a[href*="api.whatsapp"], a[href*="whatsapp.c
 // conversão "Botão WhatsApp" (foi o que derrubou os leads em 24/09/2026). Trocar só se mudar de contêiner.
 const GTM_PADRAO = "GTM-NVTZQGZ2";
 
+// Tags diretas (padrão): substituem o GTM com o MESMO resultado e ~300 KB a menos de JS.
+// - Google Ads: tag AW + conversão "Botão WhatsApp" no clique (mesma ação/rótulo que o GTM disparava).
+// - Pixel da Meta: PageView + "Lead" no clique do WhatsApp (o que o GTM disparava).
+// As chamadas entram numa FILA na hora (gtag/fbq stubs) e são enviadas quando os scripts carregam,
+// então um clique no WhatsApp ANTES do script carregar não se perde (com o GTM, se perdia).
+// Plano de volta: NEXT_PUBLIC_TRACKING_VIA=gtm na Vercel + redeploy -> volta a usar o GTM como antes.
+// NUNCA ligar as duas coisas juntas (contaria conversão em dobro).
+const VIA_GTM = process.env.NEXT_PUBLIC_TRACKING_VIA === "gtm";
+const ADS_ID = "AW-16613160058";
+const ADS_WHATS_LABEL = "CeqfCLy49roZEPro4vE9";
+const PIXEL_PADRAO = "1780102476723382";
+const LOAD_DELAY = 4000; // ms depois do load (ou antes, na primeira interação)
+
 const getStore = (k) => { try { return JSON.parse(localStorage.getItem(k) || "null"); } catch { return null; } };
 const setStore = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} };
 const cookie = (n) => document.cookie.split("; ").find((c) => c.startsWith(n + "="))?.split("=")[1];
@@ -30,6 +44,30 @@ function addScript(src, onDone) {
   s.async = true; s.src = src;
   if (onDone) { s.onload = onDone; s.onerror = onDone; }
   document.head.appendChild(s);
+}
+
+// Fila imediata (sem baixar nada): tudo que for chamado antes dos scripts carregarem fica guardado.
+function setupDirect({ googleTag, metaPixel }, pvId) {
+  if (window.__fmQueues) return;
+  window.__fmQueues = true;
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
+  window.gtag("js", new Date());
+  window.gtag("config", ADS_ID);
+  if (googleTag) window.gtag("config", googleTag);
+  const pixel = metaPixel || PIXEL_PADRAO;
+  /* eslint-disable */
+  !function(f){if(f.fbq)return;var n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[]}(window);
+  /* eslint-enable */
+  window.fbq("init", pixel);
+  window.fbq("track", "PageView", {}, { eventID: pvId });
+}
+
+function loadDirect() {
+  if (window.__fmTags) return;
+  window.__fmTags = true;
+  addScript(`https://www.googletagmanager.com/gtag/js?id=${ADS_ID}`);
+  addScript("https://connect.facebook.net/en_US/fbevents.js");
 }
 
 function loadTags({ gtm: gtmId, googleTag, metaPixel }, pvId) {
@@ -105,10 +143,20 @@ export default function Tracking({ ids, numero, msgPadrao, mode }) {
     if (fbclid && !cookie("_fbc")) document.cookie = `_fbc=fb.1.${Date.now()}.${fbclid}; path=/; max-age=7776000; SameSite=Lax`;
 
     // --- Carregamento das tags ---
-    const load = () => loadTags(ids, pvId);
+    const load = VIA_GTM ? () => loadTags(ids, pvId) : loadDirect;
     const triggers = ["pointerdown", "keydown", "scroll", "touchstart"];
     let timer;
     if (mode === "off") { /* rastreio desligado (testes) */ }
+    else if (!VIA_GTM) {
+      // Fila na hora; scripts na primeira interação ou LOAD_DELAY depois do load.
+      setupDirect(ids, pvId);
+      if (mode === "eager") load();
+      else {
+        triggers.forEach((ev) => window.addEventListener(ev, load, { once: true, passive: true }));
+        if (document.readyState === "complete") timer = setTimeout(load, LOAD_DELAY);
+        else window.addEventListener("load", () => { timer = setTimeout(load, LOAD_DELAY); }, { once: true });
+      }
+    }
     else if (mode === "eager") load();
     else {
       triggers.forEach((ev) => window.addEventListener(ev, load, { once: true, passive: true }));
@@ -116,7 +164,8 @@ export default function Tracking({ ids, numero, msgPadrao, mode }) {
       if (document.readyState === "complete") timer = setTimeout(idle, 200);
       else window.addEventListener("load", () => { timer = setTimeout(idle, 200); }, { once: true });
     }
-    if (ids.metaPixel) capi("PageView", pvId);
+    const pixelOn = !VIA_GTM || !!ids.metaPixel; // no modo GTM o pixel roda dentro do contêiner
+    if (pixelOn && mode !== "off") capi("PageView", pvId);
 
     // --- Código de rastreio na mensagem do WhatsApp ---
     let adIds = { gclid: qs.get("gclid"), gbraid: qs.get("gbraid"), wbraid: qs.get("wbraid") };
@@ -154,16 +203,25 @@ export default function Tracking({ ids, numero, msgPadrao, mode }) {
       }).catch(() => {});
     }
 
-    // --- Clique no WhatsApp: Contact no pixel e no servidor ---
+    // --- Clique no WhatsApp: conversão do Google Ads + Lead no Pixel (e no servidor) ---
     const onClick = (e) => {
       const a = e.target.closest?.(SELECTOR);
       if (!a) return;
       decorate();
-      if (mode !== "off") load();
+      if (mode === "off") return;
+      load();
       const id = newId("ct");
-      if (ids.metaPixel) window.fbq?.("track", "Contact", { content_name: a.dataset.cta || "whatsapp" }, { eventID: id });
-      if (ids.metaPixel) window.fbq?.("trackCustom", "OutboundClick", { url: "wa.me" });
-      if (ids.metaPixel) capi("Contact", id);
+      if (!VIA_GTM) {
+        // Entra na fila mesmo se o gtag.js/fbevents.js ainda não carregou; a aba continua aberta
+        // (o WhatsApp abre em nova aba), então a fila é enviada assim que o script chega.
+        window.gtag?.("event", "conversion", { send_to: `${ADS_ID}/${ADS_WHATS_LABEL}` });
+        window.fbq?.("track", "Lead", { content_name: a.dataset.cta || "whatsapp" }, { eventID: id });
+        capi("Lead", id);
+      } else if (ids.metaPixel) {
+        window.fbq?.("track", "Contact", { content_name: a.dataset.cta || "whatsapp" }, { eventID: id });
+        window.fbq?.("trackCustom", "OutboundClick", { url: "wa.me" });
+        capi("Contact", id);
+      }
     };
     document.addEventListener("click", onClick, true);
     return () => {
