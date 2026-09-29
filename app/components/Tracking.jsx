@@ -212,9 +212,12 @@ export default function Tracking({ ids, numero, msgPadrao, mode }) {
       load();
       const id = newId("ct");
       if (!VIA_GTM) {
+        // Igual ao GTM: conversão e Lead 1 vez por página (cliques repetidos não contam de novo).
+        if (window.__fmWhatsSent) return;
+        window.__fmWhatsSent = true;
         // Entra na fila mesmo se o gtag.js/fbevents.js ainda não carregou; a aba continua aberta
         // (o WhatsApp abre em nova aba), então a fila é enviada assim que o script chega.
-        window.gtag?.("event", "conversion", { send_to: `${ADS_ID}/${ADS_WHATS_LABEL}` });
+        window.gtag?.("event", "conversion", { send_to: `${ADS_ID}/${ADS_WHATS_LABEL}`, value: 1, currency: "BRL" });
         window.fbq?.("track", "Lead", { content_name: a.dataset.cta || "whatsapp" }, { eventID: id });
         capi("Lead", id);
       } else if (ids.metaPixel) {
