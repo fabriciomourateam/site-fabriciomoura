@@ -135,6 +135,10 @@ export default function Tracking({ ids, numero, msgPadrao, mode }) {
           try { a.dataset.msg = new URL(a.href).searchParams.get("text") || msgPadrao; } catch { a.dataset.msg = msgPadrao; }
         }
         a.href = `https://wa.me/${numero}?text=${encodeURIComponent(buildText(a.dataset.msg, code, tag))}`;
+        // Nova aba, igual ao site antigo: a página continua viva e o GTM termina de enviar a
+        // conversão "Botão WhatsApp" (o gatilho não usa "aguardar tags").
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
       });
     };
     decorate();
