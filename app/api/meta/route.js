@@ -7,7 +7,7 @@ export async function POST(req) {
   if (!token) return new Response(null, { status: 204 });
   try {
     const { event_name, event_id, event_source_url, fbp, fbc } = await req.json();
-    if (!["PageView", "Contact"].includes(event_name)) return new Response(null, { status: 400 });
+    if (!["PageView", "Contact", "Lead"].includes(event_name)) return new Response(null, { status: 400 });
     const ip = (req.headers.get("x-forwarded-for") || "").split(",")[0].trim();
     const payload = {
       data: [{
@@ -22,7 +22,7 @@ export async function POST(req) {
       }],
       ...(process.env.META_TEST_CODE ? { test_event_code: process.env.META_TEST_CODE } : {}),
     };
-    await fetch(`https://graph.facebook.com/v21.0/${(await getContent()).rastreio.metaPixel}/events?access_token=${token}`, {
+    await fetch(`https://graph.facebook.com/v21.0/${(await getContent()).rastreio.metaPixel || "1780102476723382"}/events?access_token=${token}`, {
       method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload),
     });
   } catch {}
