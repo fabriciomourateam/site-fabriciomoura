@@ -29,7 +29,8 @@ via proxy (rewrites do `next.config.mjs`). E-mail continua no Hostinger, intacto
 ### Fase 1 - Deploy e validacao
 - Site importado no repo proprio `fabriciomourateam/site-fabriciomoura` e deployado
   na Vercel (`site-fabriciomoura.vercel.app`).
-- Removido o GTM fantasma (`rastreio.gtm = ""`): nao rastreava nada e so gerava TBT.
+- Removido o GTM (`rastreio.gtm = ""`) achando que era fantasma. ERRO: ele disparava a conversao
+  "Botao WhatsApp" do Google Ads e o Pixel da Meta. Restaurado em 29/09/2026 (ver CLAUDE.md).
   PageSpeed subiu (desktop ~96, mobile ~99).
 - Mensagem do WhatsApp ajustada: `{cod}` no comeco, codigo pago entre crases
   (monoespacado), tag de origem `[direto]`/`[organico]` sem crase. `msgAgendar = msgPadrao`.
@@ -84,7 +85,8 @@ Vercel apos a virada.
 
 ## Rastreamento em producao (nao mudou com a virada)
 
-- **Nenhuma tag de terceiro no site** (sem GTM, GA4 ou Pixel).
+- **GTM `GTM-NVTZQGZ2` carregado pelo site** (conversao "Botao WhatsApp" do Google Ads + Pixel
+  da Meta). Obrigatorio — ver CLAUDE.md > Rastreamento. GA4 e Pixel direto seguem desligados.
 - **Conversao ao Google Ads e OFFLINE, pelo CRM:** "Reuniao agendada" (R$800) e "Venda"
   sobem por gclid via as edge functions `google-ads-conversions` / `google-ads-sales`
   do Supabase "Controle de pacientes". Independe do site.
