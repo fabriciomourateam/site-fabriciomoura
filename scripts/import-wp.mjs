@@ -11,7 +11,7 @@
  * Roda pela GitHub Action "Importar blog do WordPress" (a rede local pode não alcançar o WP).
  */
 import { mkdir, writeFile } from "node:fs/promises";
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import dns from "node:dns";
 dns.setDefaultResultOrder("ipv4first");
@@ -78,7 +78,12 @@ for (const p of posts) {
     wpId: p.id,
     content,
   };
-  await writeFile(path.join(ROOT, "content/blog", `${p.slug}.json`), JSON.stringify(post, null, 2) + "\n");
+  // campos preenchidos depois da importação (ex.: palavra-chave) são mantidos
+  const arq = path.join(ROOT, "content/blog", `${p.slug}.json`);
+  if (existsSync(arq)) {
+    try { const antes = JSON.parse(readFileSync(arq, "utf8")); if (antes.focusKw) post.focusKw = antes.focusKw; } catch {}
+  }
+  await writeFile(arq, JSON.stringify(post, null, 2) + "\n");
 }
 
 console.log(`\n${images.size} imagens para baixar.`);

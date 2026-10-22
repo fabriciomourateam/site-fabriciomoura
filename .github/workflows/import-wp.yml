@@ -1,9 +1,13 @@
 name: Importar blog do WordPress
 
 # Copia os posts e imagens do WordPress para content/blog e public/wp-content (mesmas URLs).
-# Roda por botão (Run workflow) ou quando o script de importação muda.
+# Roda por botão (Run workflow), quando o script muda e TODO DIA às 11h BRT: enquanto algum artigo
+# ainda for publicado no WordPress (automação sem BLOG_API_TOKEN), ele entra no site sozinho.
+# Quando o WordPress for desligado, apague o "schedule".
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '0 14 * * *'   # 14:00 UTC = 11:00 BRT
   push:
     paths:
       - scripts/import-wp.mjs
