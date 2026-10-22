@@ -1,5 +1,8 @@
 import { notFound, permanentRedirect } from "next/navigation";
 import TopNav from "../components/TopNav";
+import BlogCard, { ScriptBlJs } from "../components/BlogCard";
+import BlogFx from "../components/BlogFx";
+import "../components/blog.css";
 import { getPost, listPosts, relacionados, postUrl, dataBR } from "@/lib/blog";
 import { limparHtml } from "@/lib/blog-html";
 
@@ -77,28 +80,30 @@ export default async function Post({ params }) {
   ];
 
   return (
-    <>
-      <TopNav inicio />
-      <main className="blog-post">
+    <div className="bl bl--post">
+      <ScriptBlJs />
+      <div className="bl-progress" aria-hidden="true" />
+      <TopNav inicio variant="blog" />
+      <main id="conteudo" className="blog-post">
         <div dangerouslySetInnerHTML={{ __html: limparHtml(p.content) }} />
+        <p className="bl-pubdate">Publicado em {dataBR(p.date)} · por Fabricio Moura</p>
         {outros.length > 0 && (
-          <section className="blog-rel" aria-labelledby="leia-tambem">
-            <h2 id="leia-tambem">Leia também</h2>
-            <div className="blog-cards">
-              {outros.map((o) => (
-                <a key={o.slug} className="blog-card" href={postUrl(o.slug)}>
-                  <h3>{o.title}</h3>
-                  {o.description && <p>{o.description}</p>}
-                  <span>Ler artigo</span>
-                </a>
-              ))}
+          <section className="bl-wrap bl-rel" aria-labelledby="leia-tambem">
+            <div className="bl-rel__head bl-reveal">
+              <p className="bl-eyebrow">Continue lendo</p>
+              <h2 id="leia-tambem">Leia <span className="bl-gold">também</span></h2>
             </div>
-            <p className="blog-rel__all"><a href="/blog/">Ver todos os artigos</a></p>
+            <div className="bl-rel__grid">
+              {outros.map((o, i) => <BlogCard key={o.slug} post={o} i={i} />)}
+            </div>
+            <p className="bl-rel__all bl-reveal">
+              <a className="bl-btn bl-btn--ghost" href="/blog/">Ver todos os artigos<span className="bl-ico">→</span></a>
+            </p>
           </section>
         )}
-        <p className="blog-date">Publicado em {dataBR(p.date)}</p>
       </main>
+      <BlogFx />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(ld).replace(/</g, "\\u003c") }} />
-    </>
+    </div>
   );
 }

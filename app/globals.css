@@ -184,22 +184,3 @@ body:has(.sticky-bar.is-visible) { --bar-h: 72px; }
 .pratica .display { text-align: center; font-size: clamp(24px, 3.2vw, 34px); max-width: 34ch; }
 .pratica p { font-weight: 500; font-size: 15px; line-height: 1.65; margin: 0 0 14px; color: #ddd; }
 
-/* ===== Blog (app/[slug] e app/blog) ===== */
-.blog-post .mj-hero { padding-top: 64px; }
-.blog-rel, .blog-index { max-width: 1080px; margin: 0 auto; padding: 48px 22px 24px; }
-.blog-rel h2, .blog-index h1 { font-family: var(--f-display); font-weight: 400; text-transform: uppercase; letter-spacing: .5px; color: var(--white); }
-.blog-rel h2 { font-size: 2rem; margin: 0 0 22px; }
-.blog-index__head { text-align: center; margin-bottom: 36px; }
-.blog-index h1 { font-size: clamp(2.2rem, 6vw, 3.4rem); line-height: 1.05; margin: 0 0 14px; }
-.blog-index__head > p:last-child { color: var(--grey); max-width: 560px; margin: 0 auto; }
-.blog-kick { color: var(--yellow); font-size: 12px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; margin-bottom: 10px; }
-.blog-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
-.blog-card { display: flex; flex-direction: column; gap: 10px; padding: 22px; background: var(--ink); border: 1px solid #262626; border-radius: 14px; text-decoration: none; transition: border-color .2s, transform .2s; }
-.blog-card:hover { border-color: var(--yellow); transform: translateY(-2px); }
-.blog-card small { color: var(--grey); font-size: 12px; }
-.blog-card h2, .blog-card h3 { margin: 0; font-size: 1.08rem; line-height: 1.3; font-weight: 800; color: var(--white); }
-.blog-card p { margin: 0; color: var(--grey); font-size: .92rem; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-.blog-card span { margin-top: auto; color: var(--yellow); font-weight: 800; font-size: 13px; }
-.blog-rel__all { text-align: center; margin: 26px 0 0; }
-.blog-rel__all a { color: var(--yellow); font-weight: 800; }
-.blog-date { text-align: center; color: #777; font-size: 12px; padding: 8px 0 40px; margin: 0; }
