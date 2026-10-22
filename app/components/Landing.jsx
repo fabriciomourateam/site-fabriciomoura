@@ -2,7 +2,8 @@ import { getImageProps } from "next/image";
 import Carousel from "./Carousel";
 import StickyBar from "./StickyBar";
 import { ConsultoriaPremium, QuemE } from "./Posters";
-import { waLink, MENU_CONTEUDO } from "@/lib/site";
+import { waLink } from "@/lib/site";
+import TopNav from "./TopNav";
 import { getPage } from "@/lib/content";
 import PERSON from "@/lib/schema-person.json";
 import { Rich, Paragraphs } from "@/lib/rich";
@@ -63,26 +64,7 @@ export default async function Landing({ menu = true, page = "home" }) {
   return (
     <>
       {menu && (
-      <header className="topnav">
-        <nav className="topnav__desktop" aria-label="Menu principal">
-          <div className="topnav__item topnav__item--menu">
-            <a href="https://fabriciomoura.com/fmteam-links/">Conteúdo Semanal</a>
-            <ul className="topnav__dropdown">
-              {MENU_CONTEUDO.map(([t, u]) => <li key={u}><a href={u}>{t}</a></li>)}
-            </ul>
-          </div>
-          <span className="topnav__sep" aria-hidden="true">|</span>
-          <a className="topnav__item" href="https://fabriciomoura.com/calculadora-de-imc-e-calorias/">Calculadora de IMC e Calorias</a>
-        </nav>
-        <details className="topnav__mobile">
-          <summary aria-label="Abrir menu"><span /><span /><span /></summary>
-          <ul>
-            <li><a href="https://fabriciomoura.com/fmteam-links/">Conteúdo Semanal</a></li>
-            {MENU_CONTEUDO.map(([t, u]) => <li key={u} className="sub"><a href={u}>{t}</a></li>)}
-            <li><a href="https://fabriciomoura.com/calculadora-de-imc-e-calorias/">Calculadora de IMC e Calorias</a></li>
-          </ul>
-        </details>
-      </header>
+      <TopNav />
       )}
 
       <Schema c={c} />

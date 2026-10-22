@@ -1,4 +1,6 @@
 /** @type {import('next').NextConfig} */
+import { WP_PAGES } from "./lib/wp-pages.mjs";
+
 const supabaseHost = process.env.SUPABASE_URL ? new URL(process.env.SUPABASE_URL).hostname : null;
 
 const securityHeaders = [
@@ -22,8 +24,16 @@ const nextConfig = {
   },
   // Atalho da bio do Instagram: fabriciomoura.com/bio -> página de links (membros).
   // Temporário (307) de propósito, pra o navegador não cachear o destino (facilita trocar por uma /bio nativa depois).
+  // Os artigos (content/blog/*.json) são lidos em tempo de execução: incluí-los nas funções da Vercel
+  outputFileTracingIncludes: {
+    "/[slug]": ["./content/blog/**"], "/blog": ["./content/blog/**"], "/sitemap.xml": ["./content/blog/**"],
+    "/admin/**": ["./content/blog/**"], "/api/blog": ["./content/blog/**"], "/": ["./content/blog/**"],
+    "/acompanhamento-esportivo": ["./content/blog/**"], "/acompanhamento-online": ["./content/blog/**"],
+  },
   async redirects() {
     return [
+      // O sitemap agora é gerado pelo Next (app/sitemap.js). O Search Console conhece o endereço antigo do Rank Math.
+      { source: "/sitemap_index.xml", destination: "/sitemap.xml", permanent: true },
       { source: "/bio", destination: "https://membros.fabriciomoura.com/links.html", permanent: false },
       { source: "/bio/", destination: "https://membros.fabriciomoura.com/links.html", permanent: false },
     ];
@@ -49,6 +59,18 @@ const nextConfig = {
         ["/acompanhamento-online", "/lp/online"],
         ["/acompanhamento-online/", "/lp/online"],
       ].flatMap(([source, destination]) => paid.map((cond) => ({ source, has: [cond], destination }))),
+      // Páginas de 1 nível que continuam no WordPress (lib/wp-pages.mjs). Precisam vir antes da rota
+      // dos artigos (app/[slug]), que responde por todos os outros endereços de 1 nível.
+      afterFiles: wp
+        ? [
+            ...WP_PAGES.flatMap((p) => [
+              { source: `/${p}/`, destination: `${wp}/${p}/` },
+              { source: `/${p}`, destination: `${wp}/${p}` },
+            ]),
+            // arquivos soltos do WordPress (sitemaps do Rank Math, .php etc.)
+            { source: "/:file([^/]+\\.(?:php|xml|xsl|txt))", destination: `${wp}/:file` },
+          ]
+        : [],
       // Duas regras para manter a barra final (sem ela o WordPress redireciona em loop)
       fallback: wp
         ? [
