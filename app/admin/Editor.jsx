@@ -165,6 +165,7 @@ export default function Editor({ initial, storage }) {
           {uploading ? "Enviando imagem..." : dirty ? "Alterações não salvas" : "Tudo salvo"}
         </span>
         <div className="adm-top__actions">
+          <a className="adm-btn adm-btn--ghost" href="/admin/blog">Blog</a>
           <a className="adm-btn adm-btn--ghost" href={verSite} target="_blank" rel="noopener">Ver página</a>
           <button className="adm-btn" onClick={save} disabled={!dirty || saving || uploading > 0}>{saving ? "Salvando..." : "Salvar alterações"}</button>
           <form action={logout}><button className="adm-link">Sair</button></form>
