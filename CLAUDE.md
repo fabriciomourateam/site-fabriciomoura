@@ -2,8 +2,8 @@
 
 Site do Fabricio Moura (nutricionista esportivo e educador físico, fabriciomoura.com).
 Substitui a home e as páginas de anúncio do WordPress/Elementor atual por Next.js na Vercel.
-O **blog agora é do Next** (migrado em 22/10/2026, ver seção "Blog"). Só algumas páginas do Elementor
-(sobre, contato, renovação, links...) e o wp-admin continuam no WordPress, via proxy.
+O **blog e TODAS as páginas agora são do Next** (blog em 22/10/2026, demais páginas em 23/10/2026).
+Do WordPress sobrou só o wp-admin e os arquivos (lib/wp-pages.mjs), ainda via proxy.
 
 Regra do dono: o site atual converte bem. **Não mudar textos nem estrutura** sem pedido explícito.
 Preferência de escrita: sem travessão (em-dash) em nenhum texto.
@@ -20,6 +20,9 @@ Preferência de escrita: sem travessão (em-dash) em nenhum texto.
 | `/blog/` | app/blog/page.jsx | Índice dos artigos |
 | `/admin/blog` | painel do blog | Lista, novo, editar, rascunho, prévia, excluir |
 | `/calculadora-de-imc-e-calorias/` | app/calculadora-de-imc-e-calorias | Migrada do WP em 23/10/2026 (mesmas contas, textos, título e descrição) |
+| `/sobre/` `/contato/` `/termos-de-uso/` `/politica-de-privacidade/` | content/paginas (layout institucional) | HTML original do WP + menu do site |
+| `/renovacao/` `/renov/` `/renov150/` | content/paginas (layout livre, noindex) | Iguais ao WP. Painel `#admin` da própria página gera o HTML novo: colar em /admin/blog > Páginas |
+| `/links/` `/fmteam-links/` `/celulite-zero/` `/seque-ganhando-massa/` | content/paginas (layout livre) | Iguais ao WP (links lê a planilha do Google como antes) |
 
 - Conteúdo padrão em `lib/defaults.js`. Páginas de campanha ficam em `paginas.esportivo` e `paginas.online` e herdam da home tudo que não sobrescrevem (imagens, carrosséis, artes, rodapé).
 - `lib/content.js > getPage(chave)` faz a mesclagem. Salvo no Supabase (tabela site_content, bucket site-media) ou em content/site.json localmente.
@@ -34,6 +37,9 @@ Preferência de escrita: sem travessão (em-dash) em nenhum texto.
 - **Roteamento:** todo endereço de 1 nível que não é página do Next é artigo (`app/[slug]`). As páginas que AINDA
   estão no WordPress ficam listadas em `lib/wp-pages.mjs` (rewrite `afterFiles`). **Criou página nova no WP? Adicione lá.**
   Endereço desconhecido: o `[slug]` pergunta ao WP se havia redirecionamento (Rank Math) e segue; senão 404.
+- **Páginas (23/10/2026):** `content/paginas/<slug>.json` (importadas por `scripts/import-wp-paginas.mjs`, Action
+  "Importar páginas do WordPress"; imagens base64 viraram arquivos em `public/paginas/`) + linhas `tipo='pagina'` em
+  `blog_posts`. Mesmo app/[slug]; `layout` e `robots` vêm do arquivo. `/home/` redireciona para `/`.
 - **Spam da invasão (jul/2026):** `/<texto>/<número 4+ dígitos>` responde 410 (`app/api/gone`, rewrite em next.config).
   `/category/conteudo_semanal/` redireciona para `/blog/`.
 - **SEO:** canonical `/<slug>/`, título/descrição importados do Rank Math, BlogPosting + BreadcrumbList,
