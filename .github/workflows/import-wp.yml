@@ -1,0 +1,46 @@
+name: Importar blog do WordPress
+
+# Copia os posts e imagens do WordPress para content/blog e public/wp-content (mesmas URLs).
+# Roda por botão (Run workflow), quando o script muda e TODO DIA às 11h BRT: enquanto algum artigo
+# ainda for publicado no WordPress (automação sem BLOG_API_TOKEN), ele entra no site sozinho.
+# Quando o WordPress for desligado, apague o "schedule".
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 14 * * *'   # 14:00 UTC = 11:00 BRT
+  push:
+    paths:
+      - scripts/import-wp.mjs
+      - .github/workflows/import-wp.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: import-wp-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  importar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Importar
+        env:
+          WP_SOURCE: https://fabriciomoura.com
+        run: node scripts/import-wp.mjs
+      - name: Commit
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add content/blog public/wp-content
+          if git diff --staged --quiet; then
+            echo "Nada novo."
+          else
+            git commit -m "chore(blog): importa posts e imagens do WordPress"
+            git push
+          fi

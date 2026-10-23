@@ -27,7 +27,7 @@ Assim o visitante vê o site primeiro e o rastreio entra em seguida.
 4. No Supabase, rode `supabase/schema.sql` (SQL Editor).
 5. Faça o deploy e teste no endereço de prévia da Vercel.
 
-Os artigos do blog continuam no WordPress (os links do menu apontam para lá).
+Os artigos do blog são servidos pelo próprio Next, nas mesmas URLs do WordPress (ver CLAUDE.md, seção Blog). Edição em /admin/blog.
 
 ## Duas versões da página
 
@@ -38,7 +38,7 @@ Os artigos do blog continuam no WordPress (os links do menu apontam para lá).
 
 ## Trocar o domínio fabriciomoura.com mantendo o blog
 
-Tudo que não existe neste projeto (posts, páginas do Elementor, calculadora, links, wp-admin, sitemaps) é entregue pelo WordPress na mesma URL de hoje. Nenhum endereço muda, o SEO do blog fica intacto e você continua postando no WordPress normalmente.
+As páginas do Elementor que ainda não foram migradas (calculadora, links, renovação...), o wp-admin e os arquivos do WordPress são entregues pelo WordPress na mesma URL de hoje (lista em lib/wp-pages.mjs). Nenhum endereço muda, o SEO do blog fica intacto e você continua postando no WordPress normalmente.
 
 1. **Hostinger > Domínios > Subdomínios:** crie `wp.fabriciomoura.com` apontando para a mesma pasta do WordPress (`public_html`). Ative o SSL dele.
 2. **wp-config.php** (antes da linha "That's all, stop editing"):
