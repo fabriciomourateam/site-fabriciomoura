@@ -10,7 +10,7 @@ import { limparHtml } from "@/lib/blog-html";
 // Os importados são gerados no build; os novos (painel/automação) aparecem na hora e ficam em cache.
 export const dynamicParams = true;
 export async function generateStaticParams() {
-  return (await listPosts()).map((p) => ({ slug: p.slug }));
+  return (await listPosts({ tipo: "todos" })).map((p) => ({ slug: p.slug }));
 }
 
 const SITE = process.env.NEXT_PUBLIC_SITE_URL || "https://fabriciomoura.com";
@@ -22,6 +22,14 @@ export async function generateMetadata({ params }) {
   const p = await getPost(slug);
   if (!p || p.status !== "publish") return {};
   const title = p.seoTitle || `${p.title} | Fabricio Moura`;
+  if (p.tipo === "pagina") {
+    const noindex = /noindex/i.test(p.robots || "");
+    return {
+      title: { absolute: title }, description: p.description, alternates: { canonical: postUrl(p.slug) },
+      openGraph: { title, description: p.description, url: postUrl(p.slug), type: "website", locale: "pt_BR", ...(p.image ? { images: [p.image] } : {}) },
+      robots: noindex ? { index: false, follow: true } : { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
+    };
+  }
   return {
     title: { absolute: title },
     description: p.description,
@@ -59,6 +67,18 @@ export default async function Post({ params }) {
     const dest = !p ? await destinoLegado(slug) : null;
     if (dest) permanentRedirect(dest);
     notFound();
+  }
+
+  // Páginas migradas do WordPress (sobre, contato, renovação, links, páginas de venda)
+  if (p.tipo === "pagina") {
+    const html = <main id="conteudo" className="pg" dangerouslySetInnerHTML={{ __html: limparHtml(p.content) }} />;
+    if (p.layout !== "institucional") return html; // página de venda/bio: exatamente como era, sem menu
+    return (
+      <div className="bl pg-inst">
+        <TopNav inicio variant="blog" />
+        {html}
+      </div>
+    );
   }
   const outros = relacionados(p, await listPosts());
 

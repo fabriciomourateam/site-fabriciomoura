@@ -26,14 +26,18 @@ const nextConfig = {
   // Temporário (307) de propósito, pra o navegador não cachear o destino (facilita trocar por uma /bio nativa depois).
   // Os artigos (content/blog/*.json) são lidos em tempo de execução: incluí-los nas funções da Vercel
   outputFileTracingIncludes: {
-    "/[slug]": ["./content/blog/**"], "/blog": ["./content/blog/**"], "/sitemap.xml": ["./content/blog/**"],
-    "/admin/**": ["./content/blog/**"], "/api/blog": ["./content/blog/**"], "/": ["./content/blog/**"],
+    "/[slug]": ["./content/blog/**", "./content/paginas/**"], "/blog": ["./content/blog/**"], "/sitemap.xml": ["./content/blog/**", "./content/paginas/**"],
+    "/admin/**": ["./content/blog/**", "./content/paginas/**"], "/api/blog": ["./content/blog/**", "./content/paginas/**"], "/": ["./content/blog/**"],
     "/acompanhamento-esportivo": ["./content/blog/**"], "/acompanhamento-online": ["./content/blog/**"],
+    "/calculadora-de-imc-e-calorias": ["./content/blog/**"],
   },
   async redirects() {
     return [
       // O sitemap agora é gerado pelo Next (app/sitemap.js). O Search Console conhece o endereço antigo do Rank Math.
       { source: "/sitemap_index.xml", destination: "/sitemap.xml", permanent: true },
+      // Página "home" antiga do WordPress (cópia da página inicial)
+      { source: "/home", destination: "/", permanent: true },
+      { source: "/home/", destination: "/", permanent: true },
       // Listagem antiga de artigos do WordPress -> blog novo
       { source: "/category/conteudo_semanal", destination: "/blog/", permanent: true },
       { source: "/category/conteudo_semanal/:rest*", destination: "/blog/", permanent: true },
