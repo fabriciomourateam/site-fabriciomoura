@@ -34,6 +34,9 @@ const nextConfig = {
     return [
       // O sitemap agora é gerado pelo Next (app/sitemap.js). O Search Console conhece o endereço antigo do Rank Math.
       { source: "/sitemap_index.xml", destination: "/sitemap.xml", permanent: true },
+      // Listagem antiga de artigos do WordPress -> blog novo
+      { source: "/category/conteudo_semanal", destination: "/blog/", permanent: true },
+      { source: "/category/conteudo_semanal/:rest*", destination: "/blog/", permanent: true },
       { source: "/bio", destination: "https://membros.fabriciomoura.com/links.html", permanent: false },
       { source: "/bio/", destination: "https://membros.fabriciomoura.com/links.html", permanent: false },
     ];
@@ -58,7 +61,13 @@ const nextConfig = {
         ["/acompanhamento-esportivo/", "/lp/esportivo"],
         ["/acompanhamento-online", "/lp/online"],
         ["/acompanhamento-online/", "/lp/online"],
-      ].flatMap(([source, destination]) => paid.map((cond) => ({ source, has: [cond], destination }))),
+      ].flatMap(([source, destination]) => paid.map((cond) => ({ source, has: [cond], destination })))
+        .concat([
+          // Páginas falsas da invasão de jul/2026: /Nome-De-Produto/123456 (2º nível = só número com 4+ dígitos).
+          // Fora "page" (paginação do WP) e "wp-*". Respondem 410 para o Google tirar do índice.
+          { source: "/:spam((?!page$|wp-)[^/]+)/:id(\\d{4,})", destination: "/api/gone" },
+          { source: "/:spam((?!page$|wp-)[^/]+)/:id(\\d{4,})/", destination: "/api/gone" },
+        ]),
       // Páginas de 1 nível que continuam no WordPress (lib/wp-pages.mjs). Precisam vir antes da rota
       // dos artigos (app/[slug]), que responde por todos os outros endereços de 1 nível.
       afterFiles: wp
