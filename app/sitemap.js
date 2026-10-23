@@ -12,6 +12,7 @@ export default async function sitemap() {
     { url: `${site}/acompanhamento-esportivo/`, changeFrequency: "monthly", priority: 0.9 },
     { url: `${site}/acompanhamento-online/`, changeFrequency: "monthly", priority: 0.9 },
     { url: `${site}/blog/`, lastModified: ultimo, changeFrequency: "weekly", priority: 0.8 },
+    { url: `${site}/calculadora-de-imc-e-calorias/`, changeFrequency: "monthly", priority: 0.7 },
     ...posts.map((p) => ({
       url: site + postUrl(p.slug), lastModified: new Date(p.modified || p.date), changeFrequency: "monthly", priority: 0.7,
       ...(p.image ? { images: [p.image.replace(/^\//, `${site}/`)] } : {}),
