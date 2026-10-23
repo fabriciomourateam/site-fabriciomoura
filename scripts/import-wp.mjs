@@ -81,7 +81,13 @@ for (const p of posts) {
   // campos preenchidos depois da importação (ex.: palavra-chave) são mantidos
   const arq = path.join(ROOT, "content/blog", `${p.slug}.json`);
   if (existsSync(arq)) {
-    try { const antes = JSON.parse(readFileSync(arq, "utf8")); if (antes.focusKw) post.focusKw = antes.focusKw; } catch {}
+    try {
+      const antes = JSON.parse(readFileSync(arq, "utf8"));
+      if (antes.focusKw) post.focusKw = antes.focusKw;
+      // Post tirado do ar no site (draft/deleted) continua fora, mesmo publicado no WP.
+      // Ex.: Masteron/Retatrutida (23/10/2026, reprovação "Substâncias não aprovadas" no Google Ads).
+      if (antes.status && antes.status !== "publish") post.status = antes.status;
+    } catch {}
   }
   await writeFile(arq, JSON.stringify(post, null, 2) + "\n");
 }
