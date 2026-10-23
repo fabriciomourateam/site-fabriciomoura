@@ -56,21 +56,29 @@ const meta = (html, attr, name) => {
 };
 
 function limpar(c) {
-  // só o miolo entre INÍCIO e FIM, quando a página tem esses marcadores
-  const m = c.match(/<!--\s*IN[IÍ]CIO\s*-->([\s\S]*?)<!--\s*FIM[^>]*-->/i);
-  if (m) c = m[1];
+  // só o miolo entre INÍCIO e o ÚLTIMO FIM (o script do painel #admin da renovação também escreve "FIM")
+  const ini = c.search(/<!--\s*IN[IÍ]CIO\s*-->/i);
+  const fins = [...c.matchAll(/<!--\s*FIM[^>]*-->/gi)];
+  if (ini >= 0 && fins.length) {
+    const ult = fins[fins.length - 1];
+    c = c.slice(c.indexOf("-->", ini) + 3, ult.index);
+  }
+  // scripts ficam de fora da limpeza (código como "j<header.length" parecia tag)
+  const scripts = [];
+  c = c.replace(/<script\b[\s\S]*?<\/script>/gi, (m) => `\u0000S${scripts.push(m) - 1}\u0000`);
   // documento completo colado no bloco: fica só com <style> do head + corpo
   if (/<body[\s>]/i.test(c)) {
     const head = c.match(/<head[^>]*>([\s\S]*?)<\/head>/i)?.[1] || "";
     const estilos = (head.match(/<style[\s\S]*?<\/style>/gi) || []).join("\n");
     c = estilos + "\n" + (c.match(/<body[^>]*>([\s\S]*?)<\/body>/i)?.[1] || c);
   }
-  return c
-    .replace(/<!DOCTYPE[^>]*>/gi, "").replace(/<\/?(html|head|body)[^>]*>/gi, "")
-    .replace(/<meta[^>]*>|<title>[\s\S]*?<\/title>|<link[^>]+rel=["']?(preconnect|stylesheet)[^>]*>/gi, "")
+  c = c
+    .replace(/<!DOCTYPE[^>]*>/gi, "").replace(/<\/?(html|head|body)(\s[^>]*)?>/gi, "")
+    .replace(/<meta\s[^>]*>|<title>[\s\S]*?<\/title>|<link\s[^>]*rel=["']?(preconnect|stylesheet)[^>]*>/gi, "")
     .replace(/<!--[\s\S]*?-->/g, "") // instruções e marcadores (no WP vazavam como texto)
     .replace(/<p>\s*<\/p>/g, "")
     .trim();
+  return c.replace(/\u0000S(\d+)\u0000/g, (_, i) => scripts[+i]);
 }
 
 const pages = JSON.parse(await get(`${SRC}/wp-json/wp/v2/pages?per_page=100&_fields=slug,title,content,date,modified`));
