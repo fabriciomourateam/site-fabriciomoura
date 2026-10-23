@@ -70,8 +70,9 @@ export default async function Page() {
           </div>
         </article>
 
+      </main>
         {rel.length > 0 && (
-          <section className="bl-rel" aria-labelledby="cx-leia">
+          <section className="bl-wrap bl-rel cx-rel" aria-labelledby="cx-leia">
             <div className="bl-rel__head bl-reveal">
               <p className="bl-eyebrow">Continue aprendendo</p>
               <h2 id="cx-leia">Leia <span className="bl-gold">também</span></h2>
@@ -81,7 +82,6 @@ export default async function Page() {
             </div>
           </section>
         )}
-      </main>
       <BlogFx />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(ld).replace(/</g, "\\u003c") }} />
     </div>
