@@ -4,7 +4,7 @@
   "seoTitle": "Quantas Calorias por Dia para Emagrecer de Verdade | Fabricio Moura",
   "description": "Descubra quantas calorias por dia você precisa para emagrecer de verdade. Cálculo personalizado, déficit certo e erros que travam o resultado. Guia de nutricionista esportivo.",
   "image": "https://fabriciomoura.com/wp-content/uploads/2026/06/Screenshot_20260322_192920_Canva1-1024x1024.jpg",
-  "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+  "robots": "index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1",
   "date": "2026-09-29T15:25:14",
   "modified": "2026-09-29T15:25:14",
   "status": "publish",

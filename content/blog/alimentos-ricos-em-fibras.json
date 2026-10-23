@@ -4,7 +4,7 @@
   "seoTitle": "6 Alimentos Ricos em Fibras para Emagrecer | Fabricio Moura",
   "description": "Lista de alimentos ricos em fibras para emagrecer, com quanto comer por dia, os benefícios para a saciedade e um cardápio de exemplo. Guia de um nutricionista esportivo.",
   "image": "https://fabriciomoura.com/wp-content/uploads/2026/06/Screenshot_20260322_192920_Canva1-1024x1024.jpg",
-  "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+  "robots": "index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1",
   "date": "2026-06-16T00:30:40",
   "modified": "2026-08-29T18:47:17",
   "status": "publish",

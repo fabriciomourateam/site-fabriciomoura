@@ -4,7 +4,7 @@
   "seoTitle": "Nutricionista Online: Como Funciona o Acompanhamento | Fabricio Moura",
   "description": "Entenda como funciona o acompanhamento com nutricionista online, o que esperar das consultas, como é o plano alimentar e por que o resultado é real.",
   "image": "https://fabriciomoura.com/wp-content/uploads/2026/06/Screenshot_20260322_192920_Canva1-1024x1024.jpg",
-  "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+  "robots": "index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1",
   "date": "2026-06-26T12:22:26",
   "modified": "2026-08-20T15:14:06",
   "status": "publish",

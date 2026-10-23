@@ -4,7 +4,7 @@
   "seoTitle": "O que Acontece Quando Você Para de Tomar Mounjaro | Fabricio Moura",
   "description": "Parou ou pensa em parar de tomar Mounjaro? Entenda o efeito rebote, por que o peso volta, como evitar o reganho e o que fazer para manter o resultado. Guia de nutricionista esportivo.",
   "image": "https://fabriciomoura.com/wp-content/uploads/2026/06/Screenshot_20260322_192920_Canva1-1024x1024.jpg",
-  "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+  "robots": "index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1",
   "date": "2026-10-06T15:44:06",
   "modified": "2026-10-06T15:44:06",
   "status": "publish",

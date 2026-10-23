@@ -4,7 +4,7 @@
   "seoTitle": "Nutricionista Esportivo: O Que Faz e Quando Procurar | Fabricio Moura",
   "description": "Descubra o que faz um nutricionista esportivo, como ele difere do nutricionista clínico, quando procurar e o que esperar do acompanhamento. Guia completo.",
   "image": "https://fabriciomoura.com/wp-content/uploads/2026/06/Screenshot_20260322_192920_Canva1-1024x1024.jpg",
-  "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+  "robots": "index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1",
   "date": "2026-07-03T12:03:41",
   "modified": "2026-07-30T15:57:09",
   "status": "publish",

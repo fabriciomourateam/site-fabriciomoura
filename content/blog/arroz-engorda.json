@@ -4,7 +4,7 @@
   "seoTitle": "Arroz Engorda? O Que Diz o Nutricionista | Fabricio Moura",
   "description": "Arroz engorda? Entenda o que o nutricionista diz sobre carboidrato, porção certa, arroz branco x integral e como incluir no cardápio sem culpa.",
   "image": "https://fabriciomoura.com/wp-content/uploads/2026/06/Screenshot_20260322_192920_Canva1-1024x1024.jpg",
-  "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+  "robots": "index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1",
   "date": "2026-06-22T15:11:28",
   "modified": "2026-07-30T15:57:12",
   "status": "publish",

@@ -4,7 +4,7 @@
   "seoTitle": "Gordura Visceral: O Que É, Riscos e Como Reduzir | Fabricio Moura",
   "description": "O que é gordura visceral, onde fica, valores normais e altos, sintomas, riscos e o passo a passo para medir e reduzir. Guia completo de um nutricionista esportivo.",
   "image": "https://fabriciomoura.com/wp-content/uploads/2026/06/Screenshot_20260322_192920_Canva1-1024x1024.jpg",
-  "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+  "robots": "index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1",
   "date": "2026-06-19T19:27:48",
   "modified": "2026-08-29T17:55:15",
   "status": "publish",

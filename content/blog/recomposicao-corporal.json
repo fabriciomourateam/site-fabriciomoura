@@ -4,7 +4,7 @@
   "seoTitle": "Recomposição Corporal: Como Perder Gordura e Ganhar Músculo | Fabricio Moura",
   "description": "Recomposição corporal é possível? Entenda como perder gordura e ganhar músculo ao mesmo tempo, para quem funciona e o que fazer na dieta e no treino.",
   "image": "https://fabriciomoura.com/wp-content/uploads/2026/06/Screenshot_20260322_192920_Canva1-1024x1024.jpg",
-  "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+  "robots": "index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1",
   "date": "2026-07-31T12:15:15",
   "modified": "2026-08-29T18:45:04",
   "status": "publish",

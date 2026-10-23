@@ -4,7 +4,7 @@
   "seoTitle": "Como Acelerar o Metabolismo de Verdade | Fabricio Moura",
   "description": "Descubra como acelerar o metabolismo de verdade com estratégias práticas de nutrição e treino. Sem mitos, sem fórmulas mágicas. Guia completo de nutricionista esportivo.",
   "image": "https://fabriciomoura.com/wp-content/uploads/2026/06/Screenshot_20260322_192920_Canva1-1024x1024.jpg",
-  "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+  "robots": "index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1",
   "date": "2026-10-16T14:05:48",
   "modified": "2026-10-16T14:05:48",
   "status": "publish",

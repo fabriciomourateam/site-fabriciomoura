@@ -4,7 +4,7 @@
   "seoTitle": "Jejum Intermitente Emagrece Mesmo? Nutricionista Avalia | Fabricio Moura",
   "description": "Jejum intermitente emagrece de verdade? Nutricionista e treinador esportivo avalia como funciona, para quem serve, erros comuns e quando ele atrapalha mais do que ajuda.",
   "image": "https://fabriciomoura.com/wp-content/uploads/2026/06/Screenshot_20260322_192920_Canva1-1024x1024.jpg",
-  "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+  "robots": "index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1",
   "date": "2026-10-20T14:39:59",
   "modified": "2026-10-20T14:39:59",
   "status": "publish",

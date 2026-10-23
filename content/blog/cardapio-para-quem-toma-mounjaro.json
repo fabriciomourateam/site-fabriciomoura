@@ -4,7 +4,7 @@
   "seoTitle": "Cardápio para quem toma Mounjaro: o que comer | Fabricio Moura",
   "description": "Cardápio e dicas de alimentação para quem toma Mounjaro: o que comer, o que evitar e como não perder massa muscular. Guia de um nutricionista esportivo.",
   "image": "https://fabriciomoura.com/wp-content/uploads/2024/06/Design-sem-nome-15-e1781564748953.png",
-  "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+  "robots": "index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1",
   "date": "2026-06-15T10:28:13",
   "modified": "2026-08-29T11:55:03",
   "status": "publish",

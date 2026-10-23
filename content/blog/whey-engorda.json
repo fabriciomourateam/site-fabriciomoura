@@ -4,7 +4,7 @@
   "seoTitle": "Whey Protein Engorda? Mitos e Verdades | Fabricio Moura",
   "description": "Whey engorda? Entenda se o whey protein vira gordura, quantas calorias tem, como e quando tomar. Guia direto de um nutricionista esportivo.",
   "image": "https://fabriciomoura.com/wp-content/uploads/2026/06/Screenshot_20260322_192920_Canva1-1024x1024.jpg",
-  "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+  "robots": "index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1",
   "date": "2026-08-04T12:17:23",
   "modified": "2026-08-29T18:45:05",
   "status": "publish",

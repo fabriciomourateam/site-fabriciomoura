@@ -4,7 +4,7 @@
   "seoTitle": "Cardápio para Emagrecer com Saúde: Guia Prático | Fabricio Moura",
   "description": "Cardápio para emagrecer com saúde de verdade: veja como montar suas refeições, o que comer e o que evitar, com exemplo de cardápio semanal simples e eficaz. Guia de nutricionista esportivo.",
   "image": "https://fabriciomoura.com/wp-content/uploads/2026/06/Screenshot_20260322_192920_Canva1-1024x1024.jpg",
-  "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+  "robots": "index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1",
   "date": "2026-10-02T15:09:39",
   "modified": "2026-10-02T15:09:39",
   "status": "publish",

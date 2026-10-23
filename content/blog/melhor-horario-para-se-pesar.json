@@ -4,7 +4,7 @@
   "seoTitle": "Melhor Horário para Se Pesar no Emagrecimento | Fabricio Moura",
   "description": "Descubra o melhor horário para se pesar, por que o peso varia tanto ao longo do dia e como usar a balança a seu favor no emagrecimento. Guia prático de nutricionista.",
   "image": "https://fabriciomoura.com/wp-content/uploads/2026/06/Screenshot_20260322_192920_Canva1-1024x1024.jpg",
-  "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+  "robots": "index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1",
   "date": "2026-08-07T11:07:18",
   "modified": "2026-08-29T18:44:58",
   "status": "publish",

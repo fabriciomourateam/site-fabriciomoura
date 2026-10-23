@@ -4,7 +4,7 @@
   "seoTitle": "A Dieta Que Seca Sem Passar Fome: O Guia | Fabricio Moura",
   "description": "Como emagrecer sem viver com fome: os 5 princípios que saciam (proteína, fibra, volume, água e a ordem do prato), um dia de exemplo e as trocas que enganam a fome. Guia de um nutricionista esportivo.",
   "image": "https://fabriciomoura.com/wp-content/uploads/2026/06/Screenshot_20260322_192920_Canva1-1024x1024.jpg",
-  "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+  "robots": "index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1",
   "date": "2026-07-17T00:39:45",
   "modified": "2026-08-29T18:44:59",
   "status": "publish",
