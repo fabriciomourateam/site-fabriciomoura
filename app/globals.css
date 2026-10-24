@@ -52,6 +52,7 @@ p { margin: 0 0 1em; }
 .hero__content > * { max-width: 520px; }
 .hero__title { max-width: 600px !important; }
 .hero__title { font-family: var(--f-display); font-weight: 400; color: var(--yellow); text-transform: uppercase; font-size: clamp(40px, 4.8vw, 66px); line-height: 1.02; margin: 0 0 14px; }
+.hero__selo { display: block; font-family: var(--f-body); font-weight: 800; font-size: 13px; letter-spacing: 2px; color: #fff; opacity: .85; margin-bottom: 8px; }
 .hero__subtitle { font-size: clamp(18px, 1.7vw, 23px); line-height: 1.25; font-weight: 800; text-transform: uppercase; margin: 0 0 12px; }
 .hero__text { font-size: 15px; }
 .hero__hint { font-weight: 800; text-transform: uppercase; font-size: 14px; margin: 28px 0 10px; text-align: center; max-width: 360px; }

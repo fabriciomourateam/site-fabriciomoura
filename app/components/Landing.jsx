@@ -30,7 +30,10 @@ function Hero({ c }) {
         <img {...rest} fetchPriority="high" />
       </picture>
       <div className="hero__content">
-        <h1 className="hero__title">{h.titulo}</h1>
+        <h1 className="hero__title">
+          {h.selo && <span className="hero__selo">{h.selo}</span>}
+          {h.titulo}
+        </h1>
         <h2 className="hero__subtitle">{h.subtitulo}</h2>
         <p className="hero__text"><Rich text={h.texto} /></p>
         <p className="hero__hint">{h.chamada}</p>
