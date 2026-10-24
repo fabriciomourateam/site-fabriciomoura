@@ -132,6 +132,9 @@ export default async function Landing({ menu = true, page = "home" }) {
         </div>
         <p>Todos os direitos reservados. ®️<br />{new Date().getFullYear()}</p>
         <p className="footer__legal"><Rich text={c.rodape.legal} /></p>
+        <p className="footer__links">
+          <a href="/politica-de-privacidade/">Política de privacidade</a> · <a href="/termos-de-uso/">Termos de uso</a> · <a href="/contato/">Contato</a>
+        </p>
       </footer>
 
       <StickyBar texto={c.barra.texto} whats={c.barra.botaoWhats} agendar={c.barra.botaoAgendar}
