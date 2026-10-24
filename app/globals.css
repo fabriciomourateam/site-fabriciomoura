@@ -104,6 +104,8 @@ p { margin: 0 0 1em; }
 .social--whats { background: var(--whats); }
 .social--insta { background: #c13584; }
 .footer__legal { color: var(--grey); font-size: 11px; margin-top: 30px; }
+.footer__links { font-size: 12px; margin-top: 12px; }
+.footer__links a { color: var(--grey); text-decoration: underline; }
 
 /* ---------- Barra fixa ---------- */
 .sticky-bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 50; background: rgba(12,12,12,.96); border-top: 2px solid var(--yellow); transform: translateY(110%); transition: transform .3s ease; padding-bottom: env(safe-area-inset-bottom); }
