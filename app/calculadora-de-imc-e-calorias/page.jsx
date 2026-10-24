@@ -61,7 +61,7 @@ export default async function Page() {
           <p className="bl-reveal">A calculadora de IMC mostra a relação entre o seu peso e a sua altura e indica se você está abaixo do peso, no peso normal, com sobrepeso ou obesidade. Já o gasto calórico (TDEE) estima quantas calorias o seu corpo gasta por dia, somando o metabolismo basal ao seu nível de treino. Juntos, esses dois números são um ótimo ponto de partida para montar a sua estratégia.</p>
           <h2 className="bl-reveal">IMC alto nem sempre é gordura</h2>
           <p className="bl-reveal">Se você treina pesado, a calculadora de IMC pode te classificar como acima do peso mesmo com pouca gordura, porque o IMC não separa músculo de gordura. Por isso, encare o resultado como referência. O que realmente define o seu plano é uma avaliação individual, feita por quem entende de performance.</p>
-          <p className="bl-reveal">Quer transformar esse número em resultado de verdade? Veja como funciona o acompanhamento de <a href="/nutricionista-esportivo/">nutricionista esportivo</a> ou de <a href="/nutricionista-online/">nutricionista online</a>. E se você usa medicação para emagrecer, leia o guia de <a href="/cardapio-para-quem-toma-mounjaro/">cardápio para quem toma Mounjaro</a>.</p>
+          <p className="bl-reveal">Quer transformar esse número em resultado de verdade? Veja como funciona o acompanhamento de <a href="/nutricionista-esportivo/">nutricionista esportivo</a> ou de <a href="/nutricionista-online/">nutricionista online</a>.</p>
           <h2 className="bl-reveal">Perguntas frequentes</h2>
           <div className="cx-faq">
             {FAQ.map(([q, a], i) => (
