@@ -10,7 +10,7 @@ import "../components/blog.css";
 
 export const metadata = {
   title: { absolute: "Blog: nutrição, emagrecimento e hipertrofia | Fabricio Moura" },
-  description: "Artigos do nutricionista esportivo Fabricio Moura sobre emagrecimento, dieta, suplementos, Mounjaro e ganho de massa muscular. Conteúdo novo toda semana.",
+  description: "Artigos do nutricionista esportivo Fabricio Moura sobre emagrecimento, dieta, suplementos e ganho de massa muscular. Conteúdo novo toda semana.",
   alternates: { canonical: "/blog/" },
   openGraph: { title: "Blog | Fabricio Moura", url: "/blog/", type: "website", locale: "pt_BR" },
 };
