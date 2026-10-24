@@ -64,8 +64,9 @@ export default async function Landing({ menu = true, page = "home" }) {
   return (
     <>
       {menu && (
-      // Páginas de anúncio (esportivo/online): menu sem a lista de artigos do blog (política do Google Ads).
-      <TopNav artigos={page === "home"} />
+      // Home e páginas de anúncio são destino do Google Ads: menu sem a lista de artigos do blog
+      // (títulos com nome de medicamento fazem o Google limitar/reprovar os anúncios).
+      <TopNav artigos={false} />
       )}
 
       <Schema c={c} />

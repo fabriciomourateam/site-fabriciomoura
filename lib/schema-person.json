@@ -15,7 +15,7 @@
     "@id": "https://fabriciomoura.com/sobre/#webpage"
    },
    "jobTitle": "Nutricionista Esportivo",
-   "description": "Nutricionista esportivo e educador fisico com atendimento 100% online. Monta estrategias individuais de nutricao e treino para perda de gordura com preservacao de massa muscular, incluindo acompanhamento de pacientes em uso de analogos de GLP-1 como o Mounjaro (tirzepatida).",
+   "description": "Nutricionista esportivo e educador fisico com atendimento 100% online. Monta estrategias individuais de nutricao e treino para perda de gordura com preservacao de massa muscular.",
    "image": {
     "@type": "ImageObject",
     "@id": "https://fabriciomoura.com/#fabricio-foto",
@@ -115,12 +115,9 @@
     "Hipertrofia muscular",
     "Recomposicao corporal",
     "Suplementacao com creatina",
-    "Nutricao no uso de Mounjaro (tirzepatida) e analogos de GLP-1",
     "Gordura visceral",
-    "Testosterona e alimentacao",
     "Fibras alimentares e saciedade",
-    "Prescricao de treino associada a nutricao",
-    "Protocolos hormonais e nutricao (TRT, GLP-1)"
+    "Prescricao de treino associada a nutricao"
    ],
    "sameAs": [
     "https://www.instagram.com/fabriciomourateam/",
@@ -181,8 +178,7 @@
     "Nutricao esportiva",
     "Emagrecimento",
     "Hipertrofia",
-    "Acompanhamento nutricional online",
-    "Nutricao durante uso de Mounjaro"
+    "Acompanhamento nutricional online"
    ],
    "contactPoint": [
     {
