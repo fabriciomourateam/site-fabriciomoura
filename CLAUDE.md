@@ -50,6 +50,15 @@ Preferência de escrita: sem travessão (em-dash) em nenhum texto.
   `SUPABASE_SERVICE_ROLE_KEY` na Vercel precisa ser a chave nova `sb_secret_...` (`sbAuth()` em `lib/content.js`).
   Sem ela o site funciona (lê os arquivos), mas o painel não salva.
 
+## Trava de temas proibidos (26/10/2026, pedido do Fabricio)
+- **Nada de hormônio, anabolizante ou remédio de emagrecer (Mounjaro, Ozempic, canetas etc.) no fabriciomoura.com.**
+  Artigo de Masteron reprovou os anúncios do domínio inteiro no Google Ads (24/10). Esses temas vão só para o
+  fabriciomoura.blog.br (repo fabriciomoura-seo/blog-br). Nunca linkar nem redirecionar do .com para o .blog.br.
+- `lib/temas-proibidos.js` (mesma lista do robô em fabriciomoura-seo/scripts/temas-proibidos.mjs): `savePost` recusa
+  publicar e `fromFile`/`fromRow` tiram do ar (rascunho na leitura) qualquer post/página com termo proibido.
+- 26/10: "como-aumentar-testosterona-naturalmente" virou rascunho (fica só no blog.br); menções de cortisol/hormonal
+  em 10 artigos e na celulite-zero reescritas; categoria "Suplementos e hormônios" virou "Suplementos".
+
 ## Rastreamento (corrigido 29/09/2026 — LEIA antes de mexer em tag)
 - **O GTM `GTM-NVTZQGZ2` é OBRIGATÓRIO e NÃO é fantasma.** Ele é gerenciado pela agência (as
   contas Google do dono não têm acesso ao Tag Manager — por isso "parecia vazio"). O contêiner
