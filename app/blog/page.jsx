@@ -41,7 +41,7 @@ export default async function Blog() {
               O que <span className="bl-gold">funciona de verdade</span> pra secar e ganhar músculo
             </h1>
             <p className="bl-hero__sub bl-reveal" style={{ "--i": 2 }}>
-              Respostas diretas sobre dieta, suplementos, canetas emagrecedoras e treino, de quem já acompanhou
+              Respostas diretas sobre dieta, suplementos e treino, de quem já acompanhou
               mais de 2.000 transformações em 7 países. Artigo novo toda semana.
             </p>
           </div>
