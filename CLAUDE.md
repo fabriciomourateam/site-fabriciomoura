@@ -56,6 +56,7 @@ Preferência de escrita: sem travessão (em-dash) em nenhum texto.
   fabriciomoura.blog.br (repo fabriciomoura-seo/blog-br). Nunca linkar nem redirecionar do .com para o .blog.br.
 - `lib/temas-proibidos.js` (mesma lista do robô em fabriciomoura-seo/scripts/temas-proibidos.mjs): `savePost` recusa
   publicar e `fromFile`/`fromRow` tiram do ar (rascunho na leitura) qualquer post/página com termo proibido.
+- **27/10: a Action "Importar blog do WordPress" agora é SÓ manual.** Em 26/10 ela rodou sozinha e sobrescreveu os artigos limpos com o texto antigo do WP; a trava tirou 10 artigos do ar (404) e o Google Ads reprovou um sitelink. Não rode sem conferir o diff.
 - 26/10: "como-aumentar-testosterona-naturalmente" virou rascunho (fica só no blog.br); menções de cortisol/hormonal
   em 10 artigos e na celulite-zero reescritas; categoria "Suplementos e hormônios" virou "Suplementos".
 
