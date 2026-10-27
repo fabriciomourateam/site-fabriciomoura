@@ -38,7 +38,7 @@ Os artigos do blog são servidos pelo próprio Next, nas mesmas URLs do WordPres
 
 ## Trocar o domínio fabriciomoura.com mantendo o blog
 
-As páginas do Elementor que ainda não foram migradas (calculadora, links, renovação...), o wp-admin e os arquivos do WordPress são entregues pelo WordPress na mesma URL de hoje (lista em lib/wp-pages.mjs). Nenhum endereço muda, o SEO do blog fica intacto e você continua postando no WordPress normalmente.
+27/10/2026: todas as páginas e o blog são do Next. O WordPress foi desligado do site (sem proxy). Posts novos: painel /admin/blog ou a automação do repo fabriciomoura-seo.
 
 1. **Hostinger > Domínios > Subdomínios:** crie `wp.fabriciomoura.com` apontando para a mesma pasta do WordPress (`public_html`). Ative o SSL dele.
 2. **wp-config.php** (antes da linha "That's all, stop editing"):

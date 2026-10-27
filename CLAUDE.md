@@ -3,7 +3,9 @@
 Site do Fabricio Moura (nutricionista esportivo e educador físico, fabriciomoura.com).
 Substitui a home e as páginas de anúncio do WordPress/Elementor atual por Next.js na Vercel.
 O **blog e TODAS as páginas agora são do Next** (blog em 22/10/2026, demais páginas em 23/10/2026).
-Do WordPress sobrou só o wp-admin e os arquivos (lib/wp-pages.mjs), ainda via proxy.
+**27/10/2026: o WordPress foi desligado do site** (proxy, lib/wp-pages.mjs, Actions e scripts de importação removidos).
+Só o `destinoLegado()` em app/[slug] ainda LÊ redirecionamentos antigos do WP enquanto `WORDPRESS_ORIGIN` existir na Vercel.
+Não reintroduza proxy nem importação do WordPress.
 
 Regra do dono: o site atual converte bem. **Não mudar textos nem estrutura** sem pedido explícito.
 Preferência de escrita: sem travessão (em-dash) em nenhum texto.
@@ -34,8 +36,7 @@ Preferência de escrita: sem travessão (em-dash) em nenhum texto.
   `scripts/import-wp.mjs`) + tabela `blog_posts` no Supabase "Controle de pacientes" (posts novos e edições).
   Linha no Supabase com o mesmo slug VENCE o arquivo; status `draft`/`deleted` tira do ar. Tudo em `lib/blog.js`.
 - **Imagens** dos posts: `public/wp-content/uploads/...` (mesmo caminho do WP, então as URLs antigas continuam valendo).
-- **Roteamento:** todo endereço de 1 nível que não é página do Next é artigo (`app/[slug]`). As páginas que AINDA
-  estão no WordPress ficam listadas em `lib/wp-pages.mjs` (rewrite `afterFiles`). **Criou página nova no WP? Adicione lá.**
+- **Roteamento:** todo endereço de 1 nível que não é página do Next é artigo (`app/[slug]`). Não há mais proxy para o WP (27/10/2026).
   Endereço desconhecido: o `[slug]` pergunta ao WP se havia redirecionamento (Rank Math) e segue; senão 404.
 - **Páginas (23/10/2026):** `content/paginas/<slug>.json` (importadas por `scripts/import-wp-paginas.mjs`, Action
   "Importar páginas do WordPress"; imagens base64 viraram arquivos em `public/paginas/`) + linhas `tipo='pagina'` em
