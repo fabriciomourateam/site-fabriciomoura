@@ -44,9 +44,10 @@ export async function generateMetadata({ params }) {
 
 // Endereço que não é artigo: se o WordPress tinha um redirecionamento ali (Rank Math, slug antigo),
 // segue o mesmo destino. Assim nenhum link antigo que o Google conhece vira 404.
+// 27/10/2026: é a ÚNICA coisa que ainda consulta o WordPress. Só lê; sem WORDPRESS_ORIGIN (ou com o WP fora do ar) devolve null.
 async function destinoLegado(slug) {
   const wp = process.env.WORDPRESS_ORIGIN?.replace(/\/$/, "");
-  if (!wp) return null;
+  if (!wp || /^wp-|\./.test(slug)) return null; // wp-admin, wp-login.php etc. não são mais servidos aqui
   try {
     const r = await fetch(`${wp}/${slug}/`, {
       redirect: "manual", headers: { "X-Forwarded-Host": "fabriciomoura.com" }, next: { revalidate: 3600 },
@@ -54,6 +55,7 @@ async function destinoLegado(slug) {
     const loc = r.status >= 300 && r.status < 400 ? r.headers.get("location") : null;
     if (!loc) return null;
     const dest = loc.replace(/^https?:\/\/(?:www\.|wp\.)?fabriciomoura\.com/, "") || "/";
+    if (!dest.startsWith("/") || /\/wp-/.test(dest)) return null; // nunca manda o visitante pro WordPress
     return dest.replace(/\/$/, "") === `/${slug}` ? null : dest;
   } catch {
     return null;

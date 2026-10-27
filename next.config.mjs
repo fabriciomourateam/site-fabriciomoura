@@ -1,5 +1,4 @@
 /** @type {import('next').NextConfig} */
-import { WP_PAGES } from "./lib/wp-pages.mjs";
 
 const supabaseHost = process.env.SUPABASE_URL ? new URL(process.env.SUPABASE_URL).hostname : null;
 
@@ -55,9 +54,6 @@ const nextConfig = {
       { type: "query", key: "gad_source" },
       { type: "query", key: "utm_medium", value: "(?:cpc|ppc|paid|paid_social|pago|ads|cpm)" },
     ];
-    // Tudo que não existe aqui (blog, páginas do Elementor, wp-admin, sitemaps...) é servido pelo WordPress,
-    // com a mesma URL de hoje. Defina WORDPRESS_ORIGIN (ex: https://wp.fabriciomoura.com) na Vercel.
-    const wp = process.env.WORDPRESS_ORIGIN?.replace(/\/$/, "");
     return {
       beforeFiles: [
         ["/", "/consultoria"],
@@ -72,25 +68,7 @@ const nextConfig = {
           { source: "/:spam((?!page$|wp-)[^/]+)/:id(\\d{4,})", destination: "/api/gone" },
           { source: "/:spam((?!page$|wp-)[^/]+)/:id(\\d{4,})/", destination: "/api/gone" },
         ]),
-      // Páginas de 1 nível que continuam no WordPress (lib/wp-pages.mjs). Precisam vir antes da rota
-      // dos artigos (app/[slug]), que responde por todos os outros endereços de 1 nível.
-      afterFiles: wp
-        ? [
-            ...WP_PAGES.flatMap((p) => [
-              { source: `/${p}/`, destination: `${wp}/${p}/` },
-              { source: `/${p}`, destination: `${wp}/${p}` },
-            ]),
-            // arquivos soltos do WordPress (sitemaps do Rank Math, .php etc.)
-            { source: "/:file([^/]+\\.(?:php|xml|xsl|txt))", destination: `${wp}/:file` },
-          ]
-        : [],
-      // Duas regras para manter a barra final (sem ela o WordPress redireciona em loop)
-      fallback: wp
-        ? [
-            { source: "/:path+/", destination: `${wp}/:path+/` },
-            { source: "/:path*", destination: `${wp}/:path*` },
-          ]
-        : [],
+      // 27/10/2026: o WordPress saiu do ar pro site. Sem proxy: endereço desconhecido = 404 do Next.
     };
   },
   async headers() {
