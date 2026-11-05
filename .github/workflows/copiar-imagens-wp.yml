@@ -1,0 +1,26 @@
+name: Copiar imagens do WordPress (uma vez)
+on:
+  push:
+    branches: [claude/determined-newton-7u10ar]
+    paths: [.github/workflows/copiar-imagens-wp.yml]
+permissions:
+  contents: write
+jobs:
+  copiar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Baixar imagens
+        run: |
+          set -e
+          for p in 2026/06/1-1.png 2026/06/8-1.png 2026/06/7-1.png 2026/06/6-1.png 2026/06/5-1.png 2026/06/3-1.png 2026/06/4-1.png 2026/06/2-1.png 2026/06/11.png 2026/06/17.png 2026/06/16.png 2026/06/15.png 2026/06/14.png 2026/06/13.png 2026/06/12-1.png 2026/08/ChatGPT-Image-1-de-ago.-de-2026-15_40_24.png ; do
+            mkdir -p "public/wp-content/uploads/$(dirname "$p")"
+            curl -fsSL --retry 3 -o "public/wp-content/uploads/$p" "https://wp.fabriciomoura.com/wp-content/uploads/$p"
+            file "public/wp-content/uploads/$p"
+          done
+          git rm -q .github/workflows/copiar-imagens-wp.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A public/wp-content/uploads
+          git commit -m "Imagens antigas do WordPress usadas na página de links do membros"
+          git push
