@@ -1,5 +1,6 @@
 import { getImageProps } from "next/image";
 import Carousel from "./Carousel";
+import ListaAvaliacoes from "./ListaAvaliacoes";
 import StickyBar from "./StickyBar";
 import { ConsultoriaPremium, QuemE } from "./Posters";
 import { waLink } from "@/lib/site";
@@ -70,7 +71,7 @@ function Avaliacoes({ d, c }) {
         </span>
       </div>
 
-      <ul className="avaliacoes__lista">
+      <ListaAvaliacoes>
         {d.itens.map((r, i) => (
           <li key={i} className="avaliacao">
             <span className="estrelas" aria-hidden="true">★★★★★</span>
@@ -84,7 +85,7 @@ function Avaliacoes({ d, c }) {
             </div>
           </li>
         ))}
-      </ul>
+      </ListaAvaliacoes>
 
       {d.link && (
         <p className="avaliacoes__link">
