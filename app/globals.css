@@ -97,6 +97,44 @@ p { margin: 0 0 1em; }
 .faq details[open] summary::before { content: "−"; }
 .faq details p { margin: 0; padding: 14px 18px; background: #e8e8e8; color: var(--black); font-weight: 600; font-size: 14px; }
 
+/* ---------- Avaliações do Google ---------- */
+.avaliacoes { max-width: 1240px; }
+.avaliacoes .estrelas { color: var(--yellow); letter-spacing: 2px; line-height: 1; }
+
+/* Selo da nota: a primeira coisa que o olho vê depois do título */
+.avaliacoes__selo { display: inline-flex; align-items: center; gap: 14px; margin: 18px auto 0; padding: 12px 22px 12px 16px;
+  background: var(--ink); border: 1px solid rgba(246, 199, 17, .45); border-radius: 4px; box-shadow: 0 0 40px rgba(246, 199, 17, .08); }
+.avaliacoes__nota { font-size: 38px; line-height: 1; font-weight: 800; color: var(--white); }
+.avaliacoes__selo-info { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; font-size: 14px; font-weight: 600; color: #ddd; text-align: left; }
+.avaliacoes__selo-info .estrelas { font-size: 17px; }
+
+/* Cartões: 4 por linha no computador, 2 no tablet, carrossel de arrastar no celular */
+.avaliacoes__lista { list-style: none; margin: 34px 0 0; padding: 0; display: grid; gap: 16px; grid-template-columns: repeat(4, 1fr); text-align: left; }
+.avaliacao { position: relative; display: flex; flex-direction: column; gap: 14px; padding: 22px 20px 18px; background: linear-gradient(180deg, #1c1c1c, var(--ink));
+  border: 1px solid #333; border-top: 3px solid var(--yellow); border-radius: 4px; transition: transform .2s ease, border-color .2s ease; }
+.avaliacao::after { content: "\201C"; position: absolute; top: 2px; right: 16px; font-size: 72px; line-height: 1; font-family: Georgia, serif; color: rgba(246, 199, 17, .14); pointer-events: none; }
+.avaliacao .estrelas { font-size: 15px; }
+.avaliacao blockquote { margin: 0; flex: 1; color: var(--white); font-weight: 600; font-size: 15px; line-height: 1.5; }
+.avaliacao__autor { display: flex; align-items: center; gap: 10px; padding-top: 14px; border-top: 1px solid #2c2c2c; }
+.avaliacao__avatar { flex: none; width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; background: var(--yellow); color: var(--black); font-weight: 800; font-size: 16px; }
+.avaliacao__autor strong { display: block; color: var(--white); font-size: 14px; }
+.avaliacao__autor small { display: flex; align-items: center; gap: 5px; color: #aaa; font-size: 12px; font-weight: 600; margin-top: 2px; }
+.avaliacoes__link { margin: 22px 0 0; }
+.avaliacoes__link a { color: var(--yellow); font-weight: 700; text-decoration: none; border-bottom: 1px solid currentColor; }
+.avaliacoes .btn--cta { margin-top: 30px; }
+@media (hover: hover) { .avaliacao:hover { transform: translateY(-3px); border-color: #4a4a4a; } }
+@media (max-width: 1023px) { .avaliacoes__lista { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px) {
+  .avaliacoes__selo { gap: 10px; padding: 10px 16px 10px 12px; }
+  .avaliacoes__nota { font-size: 32px; }
+  .avaliacoes__selo-info { font-size: 13px; }
+  .avaliacoes__lista { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding: 0 20px; gap: 12px;
+    margin: 28px -20px 0; padding: 4px 20px 14px; scrollbar-width: none; }
+  .avaliacoes__lista::-webkit-scrollbar { display: none; }
+  .avaliacao { flex: 0 0 82%; scroll-snap-align: start; }
+}
+@media (prefers-reduced-motion: reduce) { .avaliacao { transition: none; } }
+
 /* ---------- Rodapé ---------- */
 .footer { text-align: center; padding: 30px 20px calc(40px + var(--bar-h)); font-size: 14px; }
 .footer__social { display: flex; justify-content: center; gap: 10px; margin-bottom: 18px; }
