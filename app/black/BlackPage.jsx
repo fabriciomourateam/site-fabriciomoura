@@ -23,6 +23,8 @@ function useCountdown() {
   const s = Math.floor(left / 1000);
   return { d: Math.floor(s / 86400), h: Math.floor((s % 86400) / 3600), m: Math.floor((s % 3600) / 60), s: s % 60 };
 }
+const FALLBACK = { mensal_rec: 108.08, bonus_rec: 30, preco_12m: 1297, parcela_12m: 108.08, bonus_12m: 60 };
+const brl = (n) => Number(n).toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const p2 = (n) => String(n).padStart(2, "0");
 
 function Countdown({ t, big }) {
@@ -88,7 +90,12 @@ const ITENS = [
   ["💬", "Suporte total pelo WhatsApp", "Você não faz sozinho. Contato próximo e direto com o Time."],
 ];
 
-export default function BlackPage({ k }) {
+export default function BlackPage({ k, modo = "", aluno: alunoProp = false }) {
+  const mes = modo === "mes";
+  const [info, setInfo] = useState(null);
+  const aluno = mes && (alunoProp || info?.aluno === true);
+  const num = (key) => (typeof info?.[key] === "number" && isFinite(info[key]) ? info[key] : FALLBACK[key]);
+  const apelido = typeof info?.apelido === "string" ? info.apelido.trim() : "";
   const t = useCountdown();
   const [ready, setReady] = useState(false);
   const [sticky, setSticky] = useState(false);
@@ -99,9 +106,17 @@ export default function BlackPage({ k }) {
   useEffect(() => {
     setReady(true);
     if (k) {
-      try { fetch(`${BASE}?k=${k}&visita=lp`, { mode: "no-cors", keepalive: true }).catch(() => {}); } catch (e) {}
+      try { fetch(`${BASE}?k=${k}&visita=lp${mes ? "&modo=mes" : ""}`, { mode: "no-cors", keepalive: true }).catch(() => {}); } catch (e) {}
+      if (mes) {
+        try {
+          fetch(`${BASE}?k=${k}&info=1`)
+            .then((r) => (r.ok ? r.json() : null))
+            .then((j) => { if (j && typeof j === "object") setInfo(j); })
+            .catch(() => {});
+        } catch (e) {}
+      }
     }
-  }, [k]);
+  }, [k, mes]);
 
   useEffect(() => {
     const els = document.querySelectorAll(".bf-rev");
@@ -131,7 +146,7 @@ export default function BlackPage({ k }) {
     <div className={`bf ${ready ? "bf-js" : ""}`}>
       {/* 1. Barra topo */}
       <div className="bf-top">
-        <span className="bf-top__txt"><i className="bf-dot" /> BLACK FRIDAY <em>·</em> termina em</span>
+        <span className="bf-top__txt"><i className="bf-dot" /> {mes ? "ÚLTIMO DIA DA BLACK" : "BLACK FRIDAY"} <em>·</em> termina em</span>
         <Countdown t={t} />
       </div>
 
@@ -143,10 +158,28 @@ export default function BlackPage({ k }) {
         </div>
         <div className="bf-wrap bf-hero__grid">
           <div className="bf-hero__copy">
-            <span className="bf-seal">Condição exclusiva de Black Friday</span>
-            <h1 className="bf-h1">Seu shape novo começa agora, com a <span className="bf-grad">maior condição do ano</span></h1>
-            <p className="bf-sub">Dieta e treino individualizados e acompanhamento de perto, pra você chegar no físico que quer sem sofrimento. Bora?</p>
-            <a href="#planos" onClick={goPlans} className="bf-btn bf-btn--cta">Quero garantir minha vaga</a>
+            {!mes ? (
+              <>
+                <span className="bf-seal">Condição exclusiva de Black Friday</span>
+                <h1 className="bf-h1">Seu shape novo começa agora, com a <span className="bf-grad">maior condição do ano</span></h1>
+                <p className="bf-sub">Dieta e treino individualizados e acompanhamento de perto, pra você chegar no físico que quer sem sofrimento. Bora?</p>
+                <a href="#planos" onClick={goPlans} className="bf-btn bf-btn--cta">Quero garantir minha vaga</a>
+              </>
+            ) : aluno ? (
+              <>
+                <span className="bf-seal">Último dia da Black Friday</span>
+                <h1 className="bf-h1">{apelido || "Bora"}, continue no Time com a <span className="bf-grad">melhor condição do ano</span></h1>
+                <p className="bf-sub">Renove agora pagando mês a mês, no Pix ou no cartão, sem ocupar o limite. O novo período começa só depois que o seu plano atual terminar.</p>
+                <a href="#planos" onClick={goPlans} className="bf-btn bf-btn--cta">Ver a condição</a>
+              </>
+            ) : (
+              <>
+                <span className="bf-seal">Último dia da Black Friday</span>
+                <h1 className="bf-h1">Hoje é o último dia. Comece seu shape novo <span className="bf-grad">pagando mês a mês</span></h1>
+                <p className="bf-sub">O plano pode ser feito no Pix ou no cartão, sem ocupar o limite, cobrado uma vez por mês durante o período do plano.</p>
+                <a href="#planos" onClick={goPlans} className="bf-btn bf-btn--cta">Ver a condição</a>
+              </>
+            )}
             <div className="bf-mini">
               <Stars /> <b>5,0</b> <span>· +800 avaliações no Google</span>
             </div>
@@ -189,7 +222,9 @@ export default function BlackPage({ k }) {
       {/* 5. O que recebe */}
       <section className="bf-sec bf-sec--alt">
         <div className="bf-wrap">
-          <h2 className="bf-h2 bf-rev">O que você <span className="bf-grad">recebe</span></h2>
+          {aluno
+            ? <h2 className="bf-h2 bf-rev">Tudo que você <span className="bf-grad">continua tendo</span> no Time</h2>
+            : <h2 className="bf-h2 bf-rev">O que você <span className="bf-grad">recebe</span></h2>}
           <div className="bf-cards">
             {ITENS.map(([ic, tt, tx], i) => (
               <div className="bf-card bf-rev" style={{ "--d": `${(i % 4) * 0.07}s` }} key={tt}>
@@ -225,32 +260,53 @@ export default function BlackPage({ k }) {
       {/* 7. Planos */}
       <section className="bf-sec bf-plans" id="planos" ref={plansRef}>
         <div className="bf-wrap">
-          <span className="bf-seal bf-rev">Só até 30/11</span>
+          <span className="bf-seal bf-rev">{mes ? "Só hoje" : "Só até 30/11"}</span>
           <h2 className="bf-h2 bf-rev">Escolha seu <span className="bf-grad">plano Black</span></h2>
+          {mes ? (
+            <div className="bf-plangrid bf-plangrid--mes">
+              <article className="bf-plan bf-plan--best bf-rev">
+                <span className="bf-ribbon">OPÇÃO MAIS LEVE</span>
+                <div className="bf-plan__in">
+                  <h3>Anual mês a mês</h3>
+                  <div className="bf-plan__price"><small>12x de</small><strong>R$ {brl(num("mensal_rec"))}</strong></div>
+                  <p className="bf-plan__tag">cobrado uma vez por mês, sem ocupar o limite do cartão</p>
+                  <p className="bf-plan__bonus">+ <b>{num("bonus_rec")} dias de bônus</b></p>
+                  <a className="bf-btn bf-btn--cta" href={link(k, "12m_rec")}>Quero no cartão (mês a mês)</a>
+                  <a className="bf-btn bf-btn--ghost" href={link(k, "12m_rec_boleto")}>Quero no boleto ou Pix (todo mês)</a>
+                </div>
+              </article>
+              <article className="bf-plan bf-plan--alt bf-rev" style={{ "--d": ".1s" }}>
+                <h3>Prefere pagar tudo no cartão?</h3>
+                <p className="bf-plan__bonus">12x de <b>R$ {brl(num("parcela_12m"))}</b> (12 meses + {num("bonus_12m")} dias de bônus)</p>
+                <a className="bf-btn bf-btn--ghost" href={link(k, "12m")}>Pagar no cartão parcelado</a>
+              </article>
+            </div>
+          ) : (
           <div className="bf-plangrid">
-            <article className="bf-plan bf-rev">
-              <h3>Trimestral</h3>
-              <p className="bf-plan__bonus">3 meses + <b>30 dias de bônus</b></p>
-              <div className="bf-plan__price"><small>12x de</small><strong>R$ 49,75</strong><small>no cartão</small></div>
-              <a className="bf-btn bf-btn--ghost" href={link(k, "3m")}>Quero o Trimestral</a>
-              <a className="bf-pix" href={link(k, "3m_pix")}>ou pagar no Pix</a>
-            </article>
-
-            <article className="bf-plan bf-plan--best bf-rev" style={{ "--d": ".1s" }}>
-              <span className="bf-ribbon">MAIS ESCOLHIDO</span>
-              <div className="bf-plan__in">
-                <h3>Anual</h3>
-                <p className="bf-plan__tag">Melhor custo-benefício</p>
-                <p className="bf-plan__bonus">12 meses + <b>60 dias de bônus</b></p>
-                <div className="bf-plan__price"><small>12x de</small><strong>R$ 108,08</strong><small>no cartão</small></div>
-                <p className="bf-plan__month">sai R$ 92/mês</p>
-                <a className="bf-btn bf-btn--cta" href={link(k, "12m")}>Quero o Anual</a>
-                <a className="bf-pix" href={link(k, "12m_pix")}>ou pagar no Pix</a>
-              </div>
-            </article>
-          </div>
+              <article className="bf-plan bf-rev">
+                <h3>Trimestral</h3>
+                <p className="bf-plan__bonus">3 meses + <b>30 dias de bônus</b></p>
+                <div className="bf-plan__price"><small>12x de</small><strong>R$ 49,75</strong><small>no cartão</small></div>
+                <a className="bf-btn bf-btn--ghost" href={link(k, "3m")}>Quero o Trimestral</a>
+                <a className="bf-pix" href={link(k, "3m_pix")}>ou pagar no Pix</a>
+              </article>
+  
+              <article className="bf-plan bf-plan--best bf-rev" style={{ "--d": ".1s" }}>
+                <span className="bf-ribbon">MAIS ESCOLHIDO</span>
+                <div className="bf-plan__in">
+                  <h3>Anual</h3>
+                  <p className="bf-plan__tag">Melhor custo-benefício</p>
+                  <p className="bf-plan__bonus">12 meses + <b>60 dias de bônus</b></p>
+                  <div className="bf-plan__price"><small>12x de</small><strong>R$ 108,08</strong><small>no cartão</small></div>
+                  <p className="bf-plan__month">sai R$ 92/mês</p>
+                  <a className="bf-btn bf-btn--cta" href={link(k, "12m")}>Quero o Anual</a>
+                  <a className="bf-pix" href={link(k, "12m_pix")}>ou pagar no Pix</a>
+                </div>
+              </article>
+            </div>
+          )}
           <div className="bf-deadline bf-rev">
-            <p>Condição válida só até 30/11</p>
+            <p>{mes ? "Último dia! A condição acaba hoje às 23h59" : "Condição válida só até 30/11"}</p>
             <Countdown t={t} big />
             <p className="bf-next">Assim que fizer a adesão, te mando os próximos passos pra gente começar 🚀</p>
           </div>
@@ -258,6 +314,7 @@ export default function BlackPage({ k }) {
       </section>
 
       {/* 8. Quem é */}
+      {!aluno && (
       <section className="bf-sec bf-sec--alt">
         <div className="bf-wrap bf-about">
           <div className="bf-about__img bf-rev">
@@ -275,19 +332,20 @@ export default function BlackPage({ k }) {
           </div>
         </div>
       </section>
+      )}
 
       {/* 9. Gatilhos */}
       <section className="bf-sec">
         <div className="bf-wrap bf-trig">
           <div className="bf-trig__box bf-rev">
             <span>⏳</span>
-            <h3>Só até 30/11</h3>
-            <p>A condição de Black Friday acaba no fim do mês e não volta depois.</p>
+            <h3>{mes ? "Só hoje" : "Só até 30/11"}</h3>
+            <p>{mes ? "A condição de Black Friday acaba hoje às 23h59 e não volta depois." : "A condição de Black Friday acaba no fim do mês e não volta depois."}</p>
           </div>
           <div className="bf-trig__box bf-rev" style={{ "--d": ".08s" }}>
             <span>🎁</span>
             <h3>Dias de bônus só na Black</h3>
-            <p>30 dias a mais no Trimestral e 60 dias a mais no Anual.</p>
+            <p>{mes ? `${num("bonus_rec")} dias a mais no mês a mês e ${num("bonus_12m")} dias a mais no cartão parcelado.` : "30 dias a mais no Trimestral e 60 dias a mais no Anual."}</p>
           </div>
           <div className="bf-trig__box bf-rev" style={{ "--d": ".16s" }}>
             <span>🤝</span>
@@ -302,10 +360,16 @@ export default function BlackPage({ k }) {
         <div className="bf-wrap bf-faq">
           <h2 className="bf-h2 bf-rev">Dúvidas <span className="bf-grad">frequentes</span></h2>
           {[
-            { q: "O acompanhamento online funciona?", a: "Sim. O acompanhamento online entrega a mesma estratégia individual, com a flexibilidade de fazer no seu ritmo e de onde você estiver." },
-            { q: "Você prescreve o treino também?", a: "Sim. Sou nutricionista e também educador físico, então dieta e treino são montados de forma integrada no mesmo acompanhamento." },
-            C.faq[2],
-            { q: "Como começo depois de pagar?", a: "Assim que o pagamento confirma, te mando o formulário de anamnese e os próximos passos." },
+            ...(aluno ? [
+              { q: "Quando começa o novo plano?", a: "Só depois que o seu plano atual terminar. Você não perde nenhum dia." },
+              C.faq[2],
+              { q: "O suporte continua pelo WhatsApp?", a: "Sim, o suporte continua direto comigo pelo WhatsApp." },
+            ] : [
+              { q: "O acompanhamento online funciona?", a: "Sim. O acompanhamento online entrega a mesma estratégia individual, com a flexibilidade de fazer no seu ritmo e de onde você estiver." },
+              { q: "Você prescreve o treino também?", a: "Sim. Sou nutricionista e também educador físico, então dieta e treino são montados de forma integrada no mesmo acompanhamento." },
+              C.faq[2],
+              { q: "Como começo depois de pagar?", a: "Assim que o pagamento confirma, te mando o formulário de anamnese e os próximos passos." },
+            ]),
           ].map((f, i) => (
             <div className={`bf-q ${open === i ? "bf-q--open" : ""}`} key={f.q}>
               <button type="button" aria-expanded={open === i} onClick={() => setOpen(open === i ? -1 : i)}>
@@ -335,7 +399,7 @@ export default function BlackPage({ k }) {
 
       {/* 12. Botão fixo */}
       <a href="#planos" onClick={goPlans} className={`bf-sticky ${sticky ? "bf-sticky--on" : ""}`} aria-hidden={!sticky} tabIndex={sticky ? 0 : -1}>
-        Garantir minha Black
+        {mes ? "Garantir no mês a mês" : "Garantir minha Black"}
       </a>
     </div>
   );
