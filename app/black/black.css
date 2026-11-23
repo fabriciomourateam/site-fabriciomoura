@@ -193,3 +193,11 @@
   .bf-js .bf-rev { opacity: 1; transform: none; }
   .bf-marq { overflow-x: auto; }
 }
+
+/* modo mes (ultimo dia, mes a mes) */
+.bf-plangrid--mes { grid-template-columns: 1fr; max-width: 520px; }
+.bf-plangrid--mes .bf-plan--best { transform: none; }
+.bf-plangrid--mes .bf-plan__tag { text-transform: none; letter-spacing: 0; font-size: 14px; font-weight: 700; margin: 0 0 10px; }
+.bf-plangrid--mes .bf-plan--best .bf-btn + .bf-btn { margin-top: 10px; }
+.bf-plan--alt h3 { font-size: 22px; line-height: 1.15; }
+.bf-plan--alt { padding: 22px 20px; }

@@ -21,5 +21,9 @@ export default async function Page({ searchParams }) {
   const sp = (await searchParams) || {};
   const raw = Array.isArray(sp.k) ? sp.k[0] : sp.k;
   const k = typeof raw === "string" && /^[0-9a-f]{8}$/.test(raw) ? raw : "";
-  return <BlackPage k={k} />;
+  const m = Array.isArray(sp.modo) ? sp.modo[0] : sp.modo;
+  const a = Array.isArray(sp.aluno) ? sp.aluno[0] : sp.aluno;
+  const modo = m === "mes" ? "mes" : "";
+  const aluno = a === "1";
+  return <BlackPage k={k} modo={modo} aluno={aluno} />;
 }
