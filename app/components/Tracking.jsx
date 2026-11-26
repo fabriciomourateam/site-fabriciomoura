@@ -98,7 +98,15 @@ function loadTags({ gtm: gtmId, googleTag, metaPixel }, pvId) {
   } else startGtm();
 }
 
+// Tráfego do ChatGPT (anúncios da OpenAI): página própria /chatgpt/, frase própria e tag [chatgpt].
+const CHATGPT_MSG = "{cod} Oi Fabricio!! Vim pelo ChatGPT! Gostaria de saber como funciona seu acompanhamento.";
+const isChatGPT = (qs) =>
+  /^\/chatgpt(\/|$)/i.test(location.pathname || "") ||
+  /chatgpt|openai/i.test(qs.get("utm_source") || "") ||
+  /chatgpt\.com|openai\.com/i.test(document.referrer || "");
+
 function srcTag(qs) {
+  if (isChatGPT(qs)) return "[chatgpt]";
   const utm = qs.get("utm_source");
   if (utm) return "[" + utm.toLowerCase() + "]";
   const ref = document.referrer || "";
@@ -175,13 +183,15 @@ export default function Tracking({ ids, numero, msgPadrao, mode }) {
       if (saved?.ts && Date.now() - saved.ts < TTL) adIds = saved.ids;
     }
     const tag = srcTag(qs);
+    const viaChatGPT = tag === "[chatgpt]";
     const path = (location.pathname || "").toLowerCase();
     const land = path.includes("esportivo") ? "esportivo" : path.includes("online") ? "online" : "home";
     let code = null;
     const decorate = () => {
       document.querySelectorAll(SELECTOR).forEach((a) => {
         if (!a.dataset.msg) {
-          try { a.dataset.msg = new URL(a.href).searchParams.get("text") || msgPadrao; } catch { a.dataset.msg = msgPadrao; }
+          if (viaChatGPT) a.dataset.msg = CHATGPT_MSG;
+          else try { a.dataset.msg = new URL(a.href).searchParams.get("text") || msgPadrao; } catch { a.dataset.msg = msgPadrao; }
         }
         a.href = `https://wa.me/${numero}?text=${encodeURIComponent(buildText(a.dataset.msg, code, tag))}`;
         // Nova aba, igual ao site antigo: a página continua viva e o GTM termina de enviar a
